@@ -11,6 +11,7 @@ interface Props {
     iconStyle?:any;
     value:string;
     placeholder?:string;
+    autoFocus?:boolean;
     onChangeText: (text: string) => void;
 }
 
@@ -23,7 +24,8 @@ const CustomTextInput: React.FC<Props> = ({
     iconStyle,
     value,
     onChangeText,
-    placeholder
+    placeholder,
+    autoFocus
 }) => {
     const [state, setState] = React.useState({
         hide: true,
@@ -44,6 +46,7 @@ const CustomTextInput: React.FC<Props> = ({
                 <TextInput 
                     value={value}
                     placeholder={placeholder}
+                    autoFocus={autoFocus}
                     onChangeText={onChangeText}
                     style={[styles.input, dynamicStyle, borderColor]}
                     onFocus={()=>setState({...state, focus:true})}
@@ -71,7 +74,7 @@ const styles = StyleSheet.create({
         ...theme.boxShadowStyle,
         borderColor:theme.colors.defaultBorderColor,
         backgroundColor:theme.colors.white,
-        fontFamily:"Poppins-Regular",
+        // fontFamily:"Poppins-Regular",
         color:theme.colors.black,
         paddingHorizontal:25,
         alignItems:"center",

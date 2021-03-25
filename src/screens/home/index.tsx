@@ -1,9 +1,9 @@
 import React from "react";
 import {View, StyleSheet, FlatList, TouchableOpacity} from "react-native"
-import Text from "@components/Text"
-import TextInput from "../../components/TextInput"
+import Text from '@components/Text'
+import TextInput from '@components/TextInput'
 import {connect} from "react-redux"
-import { getTodos, deleteTodo } from "../../store/actions/todos";
+import { getTodos, deleteTodo } from '../../store/actions/todos';
 import { theme } from "../../utils/theme";
 
 

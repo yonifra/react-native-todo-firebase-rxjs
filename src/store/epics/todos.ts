@@ -36,6 +36,7 @@ export const addTodoEpic = (action$: any) =>
       })
     )
 )
+
 export const editTodoEpic = (action$: any, store: any) => 
   action$.pipe(
     ofType("REQUEST_EDIT_TODO"),
@@ -48,7 +49,6 @@ export const editTodoEpic = (action$: any, store: any) =>
         ({type: "UPDATE_TODO", payload}))
     )
 )
-
 
 export const deleteTodoEpic = (action$: any) => 
   action$.pipe(

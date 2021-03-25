@@ -14,6 +14,7 @@
 		19112177579C0F6E7D841BA1 /* libPods-mytodo-mytodoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 26627C23E756567F970C7C94 /* libPods-mytodo-mytodoTests.a */; };
 		277EF6A5363A8B321B3B3EAC /* libPods-mytodo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88800208CAFD05AF8607634B /* libPods-mytodo.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		CA91D42B260B409F007BB18E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CA91D42A260B409F007BB18E /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		7DE57731434E011246793179 /* Pods-mytodo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mytodo.release.xcconfig"; path = "Target Support Files/Pods-mytodo/Pods-mytodo.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = mytodo/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		88800208CAFD05AF8607634B /* libPods-mytodo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mytodo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA91D42A260B409F007BB18E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F97D6130AAD306EC0A1E02AB /* Pods-mytodo-mytodoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mytodo-mytodoTests.debug.xcconfig"; path = "Target Support Files/Pods-mytodo-mytodoTests/Pods-mytodo-mytodoTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -116,6 +118,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				CA91D42A260B409F007BB18E /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* mytodo */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* mytodoTests */,
@@ -145,7 +148,6 @@
 				F97D6130AAD306EC0A1E02AB /* Pods-mytodo-mytodoTests.debug.xcconfig */,
 				37F61657C9613FC340766962 /* Pods-mytodo-mytodoTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -245,6 +247,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				CA91D42B260B409F007BB18E /* GoogleService-Info.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

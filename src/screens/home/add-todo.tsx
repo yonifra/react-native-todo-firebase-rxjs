@@ -1,7 +1,7 @@
 import React from "react";
 import {View, StyleSheet, TouchableOpacity} from "react-native"
-import Text from "../../components/Text"
-import TextInput from "../../components/TextInput"
+import Text from '@components/Text'
+import TextInput from '@components/TextInput'
 import {connect} from "react-redux"
 import { addTodo } from "../../store/actions/todos";
 import { theme } from "../../utils/theme";
@@ -11,7 +11,7 @@ function AddTodo({ addTodo, navigation }: any) {
     const [title, setTitle] = React.useState<string>("");
     
     const handleAddTodo=()=> {
-        addTodo({title, timestamp: new Date()})
+        addTodo({title, timestamp: Date.now()})
         navigation.goBack()
     }
 
@@ -31,6 +31,7 @@ function AddTodo({ addTodo, navigation }: any) {
                 value={title}
                 onChangeText={text => setTitle(text)}
                 placeholder="Type new todo"
+                autoFocus
             />
         </View>
     )
