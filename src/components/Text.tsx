@@ -11,19 +11,19 @@ interface Props {
   style?:any;
 }
 
-const Typography: React.FC<Props> = ({type, size, style, color, children}) => {
-  const TextStyles = styles[type || 'default'];
+const Typography: React.FC<Props> = props => {
+  const TextStyles = styles[props.type || 'default'];
   const colors = {
-      color: color || '#333333',
+      color: props.color || '#333333',
     },
     {width} = Dimensions.get('window');
   const sizeText = {
-    fontSize: size ? fs(size, width) : fs(8, width),
+    fontSize: props.size ? fs(props.size, width) : fs(8, width),
   };
   return (
     <Text
-      style={[TextStyles, colors, sizeText, style]}>
-      {children}
+      style={[TextStyles, colors, sizeText, props.style]}>
+      {props.children}
     </Text>
   );
 };

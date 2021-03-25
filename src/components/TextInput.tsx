@@ -15,48 +15,37 @@ interface Props {
     onChangeText: (text: string) => void;
 }
 
-const CustomTextInput: React.FC<Props> = ({
-    isPassword,
-    isNumber,
-    uppercase,
-    errorText,
-    icon,
-    iconStyle,
-    value,
-    onChangeText,
-    placeholder,
-    autoFocus
-}) => {
+const CustomTextInput: React.FC<Props> = (props) => {
     const [state, setState] = React.useState({
         hide: true,
         focus:false
     });
     
     const dynamicStyle = { 
-        paddingLeft: icon ? 60 : 25,
-        borderColor: !!errorText ? theme.colors.error : theme.colors.defaultBorderColor,
+        paddingLeft: props.icon ? 60 : 25,
+        borderColor: !!props.errorText ? theme.colors.error : theme.colors.defaultBorderColor,
     }
 
-    const borderColor = state.focus && !errorText ? {borderColor:theme.colors.primary} : {}
+    const borderColor = state.focus && !props.errorText ? {borderColor:theme.colors.primary} : {}
 
     return (
         <View style={[styles.container]}>
             <View style={{flexDirection:"row"}}>
-                {icon && <InputIcon source={icon} style={iconStyle} />}
+                {props.icon && <InputIcon source={props.icon} style={props.iconStyle} />}
                 <TextInput 
-                    value={value}
-                    placeholder={placeholder}
-                    autoFocus={autoFocus}
-                    onChangeText={onChangeText}
+                    value={props.value}
+                    placeholder={props.placeholder}
+                    autoFocus={props.autoFocus}
+                    onChangeText={props.onChangeText}
                     style={[styles.input, dynamicStyle, borderColor]}
                     onFocus={()=>setState({...state, focus:true})}
                     onBlur={()=>setState({...state, focus:false})}
-                    keyboardType={isNumber ? 'phone-pad' : 'default'}
-                    autoCapitalize={uppercase ? 'characters' : 'none'}
-                    secureTextEntry={isPassword ? state.hide : false}
+                    keyboardType={props.isNumber ? 'phone-pad' : 'default'}
+                    autoCapitalize={props.uppercase ? 'characters' : 'none'}
+                    secureTextEntry={props.isPassword ? state.hide : false}
                 />
             </View>
-            {!!errorText ? <Text style={styles.error}>{errorText}</Text> : null}
+            {!!props.errorText ? <Text style={styles.error}>{props.errorText}</Text> : null}
         </View>
     );
 };
