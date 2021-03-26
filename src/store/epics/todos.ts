@@ -8,16 +8,15 @@ export const getTodosEpic = (action$: any) =>
     switchMap(() => 
       firestore()
       .collection('todos')
-      .orderBy("timestamp", "desc")
+      .orderBy("createAt", "desc")
       .get()
       .then(response => {
         let payload: any = []
         response.forEach((doc) => 
-          payload.push({
-            ...doc.data(),
-            id: doc.id
-          })
-        ) 
+        payload.push({
+          ...doc.data(),
+          id: doc.id
+        }))
         return ({type: "SET_TODOS", payload})
       })
     )
@@ -25,40 +24,40 @@ export const getTodosEpic = (action$: any) =>
 
 export const addTodoEpic = (action$: any) => 
   action$.pipe(
-    ofType("REQUEST_ADD_TODO"),
+    ofType("ADD_TODO"),
     switchMap(({payload}: any) => 
       firestore()
       .collection('todos')
       .add(payload)
       .then(({id}: any)=> {
         Object.assign(payload,{id})
-        return ({type: "ADD_TODO", payload})
+        return ({type: "SUCCESS_ADD_TODO", payload})
       })
     )
 )
 
-export const editTodoEpic = (action$: any, store: any) => 
+export const editTodoEpic = (action$: any) => 
   action$.pipe(
-    ofType("REQUEST_EDIT_TODO"),
+    ofType("UPDATE_TODO"),
     switchMap(({payload}: any) => 
       firestore()
       .collection('todos')
       .doc(payload.id)
       .update(payload)
       .then(()=> 
-        ({type: "UPDATE_TODO", payload}))
+        ({type: "SUCCESS_UPDATE_TODO"}))
     )
 )
 
 export const deleteTodoEpic = (action$: any) => 
   action$.pipe(
-    ofType("REQUEST_DELETE_TODO"),
+    ofType("DELETE_TODO"),
     switchMap(({payload}: any) => 
       firestore()
       .collection('todos')
       .doc(payload.id)
       .delete()
       .then(()=> 
-        ({type: "DELETE_TODO", payload}))
+        ({type: "SUCCESS_DELETE_TODO"}))
     )
 )

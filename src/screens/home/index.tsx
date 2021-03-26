@@ -1,57 +1,96 @@
 import React from "react";
-import {View, StyleSheet, FlatList, TouchableOpacity} from "react-native"
+import {
+    KeyboardAvoidingView,
+    TouchableOpacity,
+    StyleSheet,
+    FlatList,
+    TextInput as ReactTextInput,
+    Platform,
+    View,
+} from "react-native"
 import Text from '@components/Text'
 import TextInput from '@components/TextInput'
-import {connect} from "react-redux"
-import { getTodos, deleteTodo } from '../../store/actions/todos';
+import {useSelector, useDispatch} from "react-redux"
+import { 
+    getTodos,
+    addTodo,
+    editTodo,
+    deleteTodo 
+} from '../../store/actions/todos';
 import { theme } from "../../utils/theme";
+import EvilIcons from "react-native-vector-icons/EvilIcons"
+import Feather from "react-native-vector-icons/Feather"
+import AntDesign from "react-native-vector-icons/AntDesign"
+import firestore from '@react-native-firebase/firestore';
 
 
-function Home({navigation, todos, getTodos, deleteTodo}: any) {
+export default function Home() {
+    const dispatch = useDispatch()
+    const todos = useSelector((state: any) => state.todos)
 
-    const [search, setSearch] = React.useState("");
+    const inputRef = React.useRef<ReactTextInput>(null)
+
+    const [todo, setTodo] = React.useState<{ id?:string; title:string; createAt?:Date; }>({title:""});
+    
+    const handleAddOrUpdateTodo = (): void => {
+        if(todo.title=="")return;
+        if(todo.id==null){
+            dispatch(addTodo({...todo, createAt: Date.now()}))
+        }else{
+            dispatch(editTodo(todo))
+        }   
+        setTodo({title:""})
+    }
 
     React.useEffect(() => {
-        const searcTimeout = setTimeout(()=>{
-            getTodos(search)
-        }, 400);
-        return ()=> clearTimeout(searcTimeout)
-    }, [search]);
+        dispatch(getTodos(""))
+    }, []);
 
-   
     const renderItem = ({item}: any) => (
-        <View key={item.id} style={styles.listItem}>
-            <Text>{item.title}</Text>
-            <View style={{flexDirection:"row"}}>
+        <TouchableOpacity 
+            key={item.id} 
+            onLongPress={(): void =>{
+                setTodo(item)
+                inputRef?.current?.focus()
+            }}
+            style={styles.listItem}>
+                <Text style={{flex:.95}}>{item.title}</Text>
                 <TouchableOpacity 
-                    style={{marginRight:6}} 
-                    onPress={()=>navigation.navigate("EditTodo",{item})}>
-                    <Text>Edit</Text>
+                    style={{flex:.05}}
+                    onPress={()=>dispatch(deleteTodo(item))}>
+                    <AntDesign name="closecircle" color="grey" size={13} />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=>deleteTodo(item)}>
-                    <Text>Delete</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
+        </TouchableOpacity>
     )
 
     return (
         <View style={styles.container}>
-            <TextInput 
-                value={search}
-                onChangeText={text => setSearch(text)}
-                placeholder="Search todo..."
-            />
             <FlatList 
                 data={todos.data}
                 renderItem={renderItem}
                 keyExtractor={item=> item.id}
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{paddingBottom:90}}
             />
-            <TouchableOpacity 
-                style={styles.addButton} 
-                onPress={()=>navigation.navigate("AddTodo")}>
-                <Text color="white" size={19} >+</Text>
-            </TouchableOpacity>
+            <KeyboardAvoidingView 
+                behavior={Platform.OS==="ios" ? "padding" : "height"}
+                keyboardVerticalOffset={90}
+                style={styles.compose}>
+                    <TextInput 
+                        ref={inputRef}
+                        value={todo.title}
+                        style={{flex:.9, marginRight:-6}}
+                        onChangeText={title => setTodo(prev => ({...prev, title}))}
+                        placeholder="I want to..."
+                    />
+                    <TouchableOpacity 
+                        style={styles.button}
+                        onPress={handleAddOrUpdateTodo}>
+                        {todo?.id==null 
+                            ? (<Feather name="plus" size={25} color="white" />)
+                            : (<EvilIcons name="pencil" size={25} color="white" />)}
+                    </TouchableOpacity>
+            </KeyboardAvoidingView>
         </View>
     )
 }
@@ -62,34 +101,36 @@ const styles = StyleSheet.create({
         padding:16,
         backgroundColor:theme.colors.background
     },
-    addButton:{
+    button:{
+        flex:.1,
+        marginVertical:8,
         backgroundColor:theme.colors.primary,
         justifyContent:"center",
         alignItems:"center",
-        width:60,
-        height:60,
-        borderRadius:30,
-        position:"absolute",
-        bottom:26,
-        right:26,
+        padding:8,
+        borderRadius:10,
+        fontSize:13,
+        height:50,
     },
     listItem:{
         flexDirection:"row",
         justifyContent:"space-between",
+        alignItems:"center",
         paddingVertical:12,
         borderBottomWidth:1,
         borderBottomColor:theme.colors.defaultBorderColor
+    },
+    compose:{
+        flex:1,
+        backgroundColor:"white",
+        margin:-16,
+        paddingHorizontal:16,
+        marginBottom:16,
+        position:"absolute",
+        bottom:0,
+        flexDirection:"row", 
+        justifyContent:"space-between",
+        alignSelf:"center"
     }
 })
 
-
-const mapStateToProps = (state: any) => ({
-    todos: state.todos
-})
-
-const mapDispatchToProps = (dispatch: any) => ({
-    getTodos: (data: any)=> dispatch(getTodos(data)),
-    deleteTodo: (data: any)=> dispatch(deleteTodo(data)),
-})
-
-export default connect(mapStateToProps,mapDispatchToProps)(Home)

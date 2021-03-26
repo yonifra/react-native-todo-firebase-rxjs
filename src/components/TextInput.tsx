@@ -2,6 +2,7 @@ import React from 'react';
 import {TextInput,StyleSheet,View, Text, Image} from 'react-native';
 import { theme } from '../utils/theme';
 
+type Ref = React.LegacyRef<TextInput> | undefined | null;
 interface Props {
     isPassword?: boolean;
     isNumber?:boolean;
@@ -9,13 +10,14 @@ interface Props {
     errorText?:string;
     icon?: any;
     iconStyle?:any;
+    style?:any;
     value:string;
     placeholder?:string;
     autoFocus?:boolean;
     onChangeText: (text: string) => void;
 }
 
-const CustomTextInput: React.FC<Props> = (props) => {
+const CustomTextInput= React.forwardRef((props: Partial<Props>, ref?: Ref) => {
     const [state, setState] = React.useState({
         hide: true,
         focus:false
@@ -29,15 +31,16 @@ const CustomTextInput: React.FC<Props> = (props) => {
     const borderColor = state.focus && !props.errorText ? {borderColor:theme.colors.primary} : {}
 
     return (
-        <View style={[styles.container]}>
+        <View style={[styles.container, props.style]}>
             <View style={{flexDirection:"row"}}>
                 {props.icon && <InputIcon source={props.icon} style={props.iconStyle} />}
                 <TextInput 
+                    ref={ref}
                     value={props.value}
                     placeholder={props.placeholder}
                     autoFocus={props.autoFocus}
                     onChangeText={props.onChangeText}
-                    style={[styles.input, dynamicStyle, borderColor]}
+                    style={[styles.input, dynamicStyle, borderColor, props.style]}
                     onFocus={()=>setState({...state, focus:true})}
                     onBlur={()=>setState({...state, focus:false})}
                     keyboardType={props.isNumber ? 'phone-pad' : 'default'}
@@ -48,7 +51,7 @@ const CustomTextInput: React.FC<Props> = (props) => {
             {!!props.errorText ? <Text style={styles.error}>{props.errorText}</Text> : null}
         </View>
     );
-};
+});
 const InputIcon = React.memo(({source,style}:any) => (
     <View style={styles.wrapIcon}>
         <Image source={source} style={[styles.icon,style]} /> 
@@ -57,6 +60,7 @@ const InputIcon = React.memo(({source,style}:any) => (
 
 const styles = StyleSheet.create({
     container:{
+        flex:1,
         marginVertical:8
     },
     input:{

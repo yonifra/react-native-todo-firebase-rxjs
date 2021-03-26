@@ -1,4 +1,9 @@
-export const getTodos= (payload: any)=> ({type:"REQUEST_TODOS", payload});
-export const addTodo= (payload: any)=> ({type:"REQUEST_ADD_TODO", payload});
-export const editTodo= (payload: any)=> ({type:"REQUEST_EDIT_TODO", payload});
-export const deleteTodo= (payload: any)=> ({type:"REQUEST_DELETE_TODO", payload});
+type Action = {
+    type:string;
+    payload:any;
+}
+
+export const getTodos= (payload: any): Action=> ({type:"REQUEST_TODOS", payload});
+export const addTodo= (payload: any): Action=> ({type:"ADD_TODO", payload});
+export const editTodo= (payload: any): Action=> ({type:"UPDATE_TODO", payload});
+export const deleteTodo= (payload: any): Action=> ({type:"DELETE_TODO", payload});
