@@ -27,31 +27,55 @@ import {v4 as uuidv4} from 'react-native-uuid'
 import {useSelector, useDispatch} from "react-redux"
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
+import { persistor } from "store/store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
-export default function Home() {
+export default function Home({navigation}: any) {
     const insets = useSafeAreaInsets()
     const dispatch = useDispatch()
     const todos = useSelector((state: any) => state.todos)
+    const {user} = useSelector((state: any) => state.auth)
 
     const inputRef = React.useRef<ReactTextInput>(null)
 
-    const [todo, setTodo] = React.useState<{ id?:string; title:string; createAt?:Date; }>({title:""});
+    const [todo, setTodo] = React.useState<{ id?:string; title:string; createAt?:Date; createBy?:string }>({title:""});
     
     const handleAddOrUpdateTodo = (): void => {
         if(todo.title=="")return;
         if(todo.id==null){
-            dispatch(addTodo({...todo, id: uuidv4(), createAt: Date.now()}))
+            Object.assign(todo,{
+                id: uuidv4(),
+                createBy: user.uid,
+                createAt: Date.now()
+            })
+            dispatch(addTodo(todo))
         }else{
+            Object.assign(todo,{
+                updateAt: Date.now()
+            })
             dispatch(editTodo(todo))
             inputRef?.current?.blur()
         }   
         setTodo({title:""})
     }
 
+    const logout = async () => {
+        await persistor.purge()
+        await AsyncStorage.clear()
+    }
+
     React.useEffect(() => {
         dispatch(getTodos(""))
     }, []);
+
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight:() => (<TouchableOpacity onPress={logout} style={{marginRight:8}}>
+                                    <AntDesign name="right" size={24} />
+                                </TouchableOpacity>)
+        })
+    },[navigation])
 
     const renderItem = ({item}: any) => (
         <TouchableOpacity 
@@ -69,7 +93,6 @@ export default function Home() {
                 </TouchableOpacity>
         </TouchableOpacity>
     )
-
     
     return (
         <SafeAreaView 

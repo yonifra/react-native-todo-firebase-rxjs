@@ -1,5 +1,5 @@
 const initialState = {
-    profile:null,
+    user:null,
     token:null
   }
   
@@ -8,8 +8,7 @@ const initialState = {
         case 'SET_AUTH':
           return {
             ...state,
-            profile: payload.profile,
-            token: payload.token,
+            ...payload
           };
         default:
           return state;

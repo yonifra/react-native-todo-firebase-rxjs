@@ -14,7 +14,7 @@ function Routes() {
   const SplashStack = createStackNavigator();
   const AuthStack = createStackNavigator();
 
-  const {profile} = useSelector((state: any) => state.auth);
+  const {user} = useSelector((state: any) => state.auth);
   const {isSplashing} = useSelector((state: any) => state.apps);
 
   if (isSplashing) {
@@ -29,7 +29,7 @@ function Routes() {
     );
   }
 
-  if (!profile) {
+  if (!user) {
     return (
       <NavigationContainer>
         <AuthStack.Navigator

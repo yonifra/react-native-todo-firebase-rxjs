@@ -2,13 +2,13 @@ import firestore from '@react-native-firebase/firestore';
 import { switchMap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 
-export const getTodosEpic = (action$: any) => 
+export const getTodosEpic = (action$: any, store: any) => 
   action$.pipe(
     ofType("REQUEST_TODOS"),
     switchMap(() => 
       firestore()
       .collection('todos')
-      .orderBy("createAt", "desc")
+      .where("createBy", "==", store.value.auth.user.uid)
       .get()
       .then(response => {
         let payload: any = []
@@ -17,6 +17,7 @@ export const getTodosEpic = (action$: any) =>
           ...doc.data(),
           fireId: doc.id
         }))
+        payload.sort((a:any ,b:any) => b.createAt - a.createAt)
         return ({type: "SET_TODOS", payload})
       })
     )
