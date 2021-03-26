@@ -10,25 +10,28 @@ import {
     View,
     Image,
 } from "react-native"
-import Text from '@components/Text'
+
+import { widthPercentageToDP as wp } from "react-native-responsive-screen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import AntDesign from "react-native-vector-icons/AntDesign"
+import EvilIcons from "react-native-vector-icons/EvilIcons"
+import Feather from "react-native-vector-icons/Feather"
+import {useSelector, useDispatch} from "react-redux"
+import {v4 as uuidv4} from 'react-native-uuid'
+import { persistor } from "store/store";
+import { theme } from '@utils/theme';
+
 import TextInput from '@components/TextInput'
 import Button from '@components/Button'
+import Text from '@components/Text'
+
 import { 
     deleteTodo, 
     editTodo,
     getTodos,
     addTodo,
 } from '@store/actions/todos';
-import { theme } from '@utils/theme';
-import AntDesign from "react-native-vector-icons/AntDesign"
-import EvilIcons from "react-native-vector-icons/EvilIcons"
-import Feather from "react-native-vector-icons/Feather"
-import {v4 as uuidv4} from 'react-native-uuid'
-import {useSelector, useDispatch} from "react-redux"
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { widthPercentageToDP as wp } from "react-native-responsive-screen";
-import { persistor } from "store/store";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 export default function Home({navigation}: any) {
@@ -39,7 +42,11 @@ export default function Home({navigation}: any) {
 
     const inputRef = React.useRef<ReactTextInput>(null)
 
-    const [todo, setTodo] = React.useState<{ id?:string; title:string; createAt?:Date; createBy?:string }>({title:""});
+    const [todo, setTodo] = React.useState<{ 
+        id?:string;
+        title:string;
+        createAt?:Date;
+        createBy?:string }>({title:""});
     
     const handleAddOrUpdateTodo = (): void => {
         if(todo.title=="")return;
@@ -169,9 +176,9 @@ const styles = StyleSheet.create({
     },
     listItem:{
         borderBottomColor:theme.colors.defaultBorderColor,
+        justifyContent:"space-between",
         borderBottomWidth:0.2,
         paddingHorizontal:16,
-        justifyContent:"space-between",
         flexDirection:"row",
         alignItems:"center",
         minHeight:50,
@@ -180,8 +187,8 @@ const styles = StyleSheet.create({
         borderTopColor:theme.colors.defaultBorderColor,
         justifyContent:"space-between",
         backgroundColor:"white",
-        borderTopWidth:0.5,
         paddingHorizontal:12,
+        borderTopWidth:0.5,
         flexDirection:"row", 
         alignSelf:"center",
     }
