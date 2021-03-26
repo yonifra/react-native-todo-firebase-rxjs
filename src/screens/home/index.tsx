@@ -12,6 +12,7 @@ import {
 } from "react-native"
 import Text from '@components/Text'
 import TextInput from '@components/TextInput'
+import Button from '@components/Button'
 import { 
     deleteTodo, 
     editTodo,
@@ -97,13 +98,13 @@ export default function Home() {
                         onChangeText={title => setTodo(prev => ({...prev, title}))}
                         placeholder="I want to..."
                     />
-                    <TouchableOpacity 
-                        style={styles.button}
+                    <Button 
+                        style={styles.buttonCircle}
                         onPress={handleAddOrUpdateTodo}>
                         {todo?.id==null 
                             ? (<Feather name="plus" size={20} color="white" />)
                             : (<EvilIcons name="pencil" size={20} color="white" />)}
-                    </TouchableOpacity>
+                    </Button>
                 </View>
             </KeyboardAvoidingView>
         </SafeAreaView>
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
         flexDirection:"column",
         flex:1,
     },
-    button:{
+    buttonCircle:{
         backgroundColor:theme.colors.primary,
         justifyContent:"center",
         alignItems:"center",
