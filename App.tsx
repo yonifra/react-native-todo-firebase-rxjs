@@ -15,8 +15,8 @@ function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-            <StatusBar backgroundColor={theme.colors.white} barStyle="dark-content" />
-            <Routes />
+          <StatusBar backgroundColor={theme.colors.white} barStyle="dark-content" />
+          <Routes />
       </PersistGate>
     </Provider>
   );

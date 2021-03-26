@@ -15,7 +15,7 @@ export const getTodosEpic = (action$: any) =>
         response.forEach((doc) => 
         payload.push({
           ...doc.data(),
-          id: doc.id
+          fireId: doc.id
         }))
         return ({type: "SET_TODOS", payload})
       })
@@ -29,8 +29,8 @@ export const addTodoEpic = (action$: any) =>
       firestore()
       .collection('todos')
       .add(payload)
-      .then(({id}: any)=> {
-        Object.assign(payload,{id})
+      .then(({id: fireId}: any)=> {
+        Object.assign(payload,{fireId})
         return ({type: "SUCCESS_ADD_TODO", payload})
       })
     )
@@ -42,7 +42,7 @@ export const editTodoEpic = (action$: any) =>
     switchMap(({payload}: any) => 
       firestore()
       .collection('todos')
-      .doc(payload.id)
+      .doc(payload.fireId)
       .update(payload)
       .then(()=> 
         ({type: "SUCCESS_UPDATE_TODO"}))
@@ -55,7 +55,7 @@ export const deleteTodoEpic = (action$: any) =>
     switchMap(({payload}: any) => 
       firestore()
       .collection('todos')
-      .doc(payload.id)
+      .doc(payload.fireId)
       .delete()
       .then(()=> 
         ({type: "SUCCESS_DELETE_TODO"}))

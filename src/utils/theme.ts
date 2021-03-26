@@ -1,8 +1,8 @@
 
 export const theme: any = {
   colors: {
-    background:"#F7F7F7",
-    primary: "#259E91",
+    background:"#fff",
+    primary: "#27A5EE",
     secondary: "#78C671",
     error: "#F83231",
     light: "#F8F8F8",

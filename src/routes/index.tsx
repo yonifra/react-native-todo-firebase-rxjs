@@ -17,8 +17,12 @@ function Routes() {
         initialRouteName="Home"
           >
         <StackNav.Screen name="Home" component={Home} 
-          options={{
-            headerTitle:"My Todo"
+          options={{ 
+            headerTitle:"ALL TASKS",
+            headerStyle:{
+              elevation: 0,
+              shadowOpacity: 0,
+            }
           }} />
       </StackNav.Navigator>
     </NavigationContainer>

@@ -4,6 +4,7 @@ import { theme } from '../utils/theme';
 
 type Ref = React.LegacyRef<TextInput> | undefined | null;
 interface Props {
+    type:'round' | 'default'
     isPassword?: boolean;
     isNumber?:boolean;
     uppercase?:boolean;
@@ -40,7 +41,7 @@ const CustomTextInput= React.forwardRef((props: Partial<Props>, ref?: Ref) => {
                     placeholder={props.placeholder}
                     autoFocus={props.autoFocus}
                     onChangeText={props.onChangeText}
-                    style={[styles.input, dynamicStyle, borderColor, props.style]}
+                    style={[styles.input, dynamicStyle, borderColor, styles[props.type || 'default'] , props.style]}
                     onFocus={()=>setState({...state, focus:true})}
                     onBlur={()=>setState({...state, focus:false})}
                     keyboardType={props.isNumber ? 'phone-pad' : 'default'}
@@ -52,7 +53,8 @@ const CustomTextInput= React.forwardRef((props: Partial<Props>, ref?: Ref) => {
         </View>
     );
 });
-const InputIcon = React.memo(({source,style}:any) => (
+
+const InputIcon: React.FC<{ source:any; style:any; }> = React.memo(({source,style}) => (
     <View style={styles.wrapIcon}>
         <Image source={source} style={[styles.icon,style]} /> 
     </View>
@@ -98,6 +100,12 @@ const styles = StyleSheet.create({
         top:15,
         bottom:8,
     },
+    round:{
+        borderRadius:25
+    },
+    default:{
+        borderRadius:10
+    }
 });
 
 
