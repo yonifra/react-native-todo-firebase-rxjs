@@ -1,4 +1,3 @@
-
 export const theme: any = {
   colors: {
     background:"#fff",
