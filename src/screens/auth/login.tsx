@@ -6,13 +6,16 @@ import { useDispatch } from 'react-redux';
 import { theme } from 'utils/theme';
 import { setAuth } from 'store/actions/auth';
 
- function Login() {
+ function Login({navigation}: any) {
     const dispatch = useDispatch()
     return (
         <View style={styles.container}>
-            <Text>My Todo</Text>
+            <Text>My Todo Login</Text>
             <Button onPress={()=> dispatch(setAuth({profile:{name:"Feri"}}))}>
                 <Text>Login</Text>
+            </Button>
+            <Button onPress={()=> navigation.navigate("Register")}>
+                <Text>Register</Text>
             </Button>
         </View>
     )
@@ -22,7 +25,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor:theme.colors.primary
+        backgroundColor:theme.colors.white
     },
 });
 

@@ -121,7 +121,7 @@ const EmptyComponent = () => (
                     height:wp(70)
                 }}
              />
-        <Text type="bold" size={10}>There are no tasks today</Text>
+        <Text type="semibold" size={10}>There are no tasks today</Text>
     </View>
 )
 

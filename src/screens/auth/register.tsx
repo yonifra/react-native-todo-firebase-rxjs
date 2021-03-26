@@ -5,19 +5,19 @@ import { connect } from 'react-redux';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { theme } from 'utils/theme';
 
-function Splash() {
+function Splash({navigation}: any) {
     return (
         <View style={styles.container}>
-            <Text>My Todo</Text>
+            <Text>Register</Text>
         </View>
     )
 }
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor:theme.colors.white,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor:theme.colors.primary
     },
     logo:{
         width:wp(50),

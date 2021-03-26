@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         ...theme.boxShadowStyle,
         borderColor:theme.colors.defaultBorderColor,
         backgroundColor:theme.colors.white,
-        // fontFamily:"Poppins-Regular",
+        fontFamily:"OpenSans-Regular",
         color:theme.colors.black,
         paddingHorizontal:25,
         alignItems:"center",

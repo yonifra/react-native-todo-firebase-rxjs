@@ -31,23 +31,23 @@ const Typography: React.FC<Props> = props => {
 const styles = StyleSheet.create({
   default: {
     fontSize: fs(7, width),
-    // fontFamily: 'Poppins-Regular',
+    fontFamily: 'OpenSans-Regular',
   },
   thin: {
     fontSize: fs(9, width),
-    // fontFamily: 'Poppins-Thin',
+    fontFamily: 'OpenSans-Thin',
   },
   regular: {
     fontSize: fs(9, width),
-    // fontFamily: 'Poppins-Regular',
+    fontFamily: 'OpenSans-Regular',
   },
   semibold: {
     fontSize: fs(9, width),
-    // fontFamily: 'Poppins-SemiBold',
+    fontFamily: 'OpenSans-SemiBold',
   },
   bold: {
     fontSize: fs(9, width),
-    // fontFamily: 'Poppins-Bold',
+    fontFamily: 'OpenSans-Bold',
   },
 });
 
