@@ -8,8 +8,8 @@ import {Provider} from 'react-redux';
 import 'react-native-gesture-handler';
 import {PersistGate} from 'redux-persist/integration/react';
 
-import {store, persistor} from './src/store/store';
-import { theme } from './src/utils/theme';
+import {store, persistor} from '@store/store';
+import { theme } from '@utils/theme';
 
 function App() {
   return (

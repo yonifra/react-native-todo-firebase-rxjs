@@ -3,7 +3,7 @@ import {View ,StyleSheet} from 'react-native'
 import Text from '@components/Text'
 import { connect } from 'react-redux';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
-import { theme } from 'utils/theme';
+import { theme } from '@utils/theme';
 
 function Splash({navigation}: any) {
     return (

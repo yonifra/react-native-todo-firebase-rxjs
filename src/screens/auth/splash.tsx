@@ -2,9 +2,9 @@ import React from 'react';
 import {View ,StyleSheet} from 'react-native'
 import Text from '@components/Text'
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
-import { theme } from 'utils/theme';
+import { theme } from '@utils/theme';
 import { useDispatch } from 'react-redux';
-import { setSplash } from 'store/actions/apps';
+import { setSplash } from '@store/actions/apps';
 
  function SpashScreen() {
     const dispatch = useDispatch()

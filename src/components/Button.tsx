@@ -1,7 +1,7 @@
 import React,{ReactNode} from "react";
 import { widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import { TouchableOpacity, StyleSheet } from "react-native";
-import { theme } from "utils/theme";
+import { theme } from '@utils/theme';
 
 interface Props {
     mode?: 'outlined' | 'default';
@@ -31,7 +31,7 @@ const CustomButton: React.FC<Props> = (props) => {
 
 const styles = StyleSheet.create({
     button:{
-        marginVertical:16,
+        marginVertical:8,
         paddingVertical:12,
         paddingHorizontal:wp(8),
         borderRadius:wp(2),

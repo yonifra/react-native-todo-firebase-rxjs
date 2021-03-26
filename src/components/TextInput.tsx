@@ -1,6 +1,6 @@
 import React from 'react';
 import {TextInput,StyleSheet,View, Text, Image} from 'react-native';
-import { theme } from '../utils/theme';
+import { theme } from '@utils/theme';
 
 type Ref = React.LegacyRef<TextInput> | undefined | null;
 interface Props {
@@ -62,7 +62,6 @@ const InputIcon: React.FC<{ source:any; style:any; }> = React.memo(({source,styl
 
 const styles = StyleSheet.create({
     container:{
-        flex:1,
         marginVertical:8
     },
     input:{

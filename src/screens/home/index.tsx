@@ -18,8 +18,8 @@ import {
     editTodo,
     getTodos,
     addTodo,
-} from '../../store/actions/todos';
-import { theme } from "../../utils/theme";
+} from '@store/actions/todos';
+import { theme } from '@utils/theme';
 import AntDesign from "react-native-vector-icons/AntDesign"
 import EvilIcons from "react-native-vector-icons/EvilIcons"
 import Feather from "react-native-vector-icons/Feather"
@@ -44,6 +44,7 @@ export default function Home() {
             dispatch(addTodo({...todo, id: uuidv4(), createAt: Date.now()}))
         }else{
             dispatch(editTodo(todo))
+            inputRef?.current?.blur()
         }   
         setTodo({title:""})
     }
