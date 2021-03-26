@@ -4,8 +4,8 @@ import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 
-import Home from "../screens/home"
-import {Splash, Login, Register} from "../screens/auth"
+import Home from '@screens/home'
+import {Splash, Login, Register} from '@screens/auth'
 
 import {useSelector} from 'react-redux';
 
