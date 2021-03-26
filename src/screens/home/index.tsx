@@ -60,7 +60,7 @@ export default function Home() {
                 inputRef?.current?.focus()
             }}
             style={styles.listItem}>
-                <Text style={{flex:.95}}>{item.title}</Text>
+                <Text maxLines={2} style={{flex:.9}}>{item.title}</Text>
                 <TouchableOpacity 
                     style={{flex:.05}}
                     onPress={()=>dispatch(deleteTodo(item))}>

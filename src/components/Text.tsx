@@ -9,6 +9,7 @@ interface Props {
   size?: number;
   children: string | ReactNode | null;
   style?:any;
+  maxLines?:number;
 }
 
 const Typography: React.FC<Props> = props => {
@@ -22,7 +23,9 @@ const Typography: React.FC<Props> = props => {
   };
   return (
     <Text
-      style={[TextStyles, colors, sizeText, props.style]}>
+      numberOfLines={props.maxLines}
+      style={[TextStyles, colors, sizeText, props.style]}
+      >
       {props.children}
     </Text>
   );
