@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
         width:"100%",
         position:"absolute",
         zIndex:1, 
-        top:11
+        top:10
     },
     title:{
         alignSelf:"center",

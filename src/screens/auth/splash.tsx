@@ -12,7 +12,7 @@ import { setSplash } from '@store/actions/apps';
     React.useEffect(() => {
           setTimeout(() => {
             dispatch(setSplash())
-          }, 3000);
+          }, 2000);
       }, []);
     return (
         <View style={styles.container}>
