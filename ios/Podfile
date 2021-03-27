@@ -13,6 +13,7 @@ target 'mytodo' do
   )
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+  pod 'GoogleSignIn', '~> 5.0.2'
 
   target 'mytodoTests' do
     inherit! :complete

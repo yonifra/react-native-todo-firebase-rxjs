@@ -9,16 +9,21 @@ import {
     Platform,
     View,
     Image,
+    Alert,
 } from "react-native"
 
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import AntDesign from "react-native-vector-icons/AntDesign"
 import EvilIcons from "react-native-vector-icons/EvilIcons"
 import Feather from "react-native-vector-icons/Feather"
 import {useSelector, useDispatch} from "react-redux"
+import auth from '@react-native-firebase/auth';
 import {v4 as uuidv4} from 'react-native-uuid'
+
+import RNRestart from 'react-native-restart';
 import { persistor } from "store/store";
 import { theme } from '@utils/theme';
 
@@ -38,7 +43,6 @@ export default function Home({navigation}: any) {
     const insets = useSafeAreaInsets()
     const dispatch = useDispatch()
     const todos = useSelector((state: any) => state.todos)
-    const {user} = useSelector((state: any) => state.auth)
 
     const inputRef = React.useRef<ReactTextInput>(null)
 
@@ -53,7 +57,6 @@ export default function Home({navigation}: any) {
         if(todo.id==null){
             Object.assign(todo,{
                 id: uuidv4(),
-                createBy: user.uid,
                 createAt: Date.now()
             })
             dispatch(addTodo(todo))
@@ -67,9 +70,33 @@ export default function Home({navigation}: any) {
         setTodo({title:""})
     }
 
-    const logout = async () => {
-        await persistor.purge()
-        await AsyncStorage.clear()
+    const logout = () => {
+        Alert.alert(
+            "Logout?",
+            "You will back to login screen.",
+            [
+                {
+                    text:"Cancel",
+                },
+                {
+                    text:"Logout",
+                    onPress: async () => {
+                        await persistor.purge()
+                        await AsyncStorage.clear()
+                        try {
+                            await GoogleSignin.revokeAccess();
+                            await GoogleSignin.signOut();
+                            await auth().signOut()
+                        } finally {
+                            RNRestart.Restart();
+                        }
+                    }
+                }
+            ],
+            {
+                cancelable:true
+            }
+        )
     }
 
     React.useEffect(() => {
@@ -168,8 +195,9 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         alignItems:"center",
         marginVertical:8,
+        paddingVertical:0,
+        paddingHorizontal:0,
         borderRadius:20,
-        fontSize:13,
         height:40,
         width:40,
         flex:.11,

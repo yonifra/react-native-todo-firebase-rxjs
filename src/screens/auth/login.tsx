@@ -2,11 +2,16 @@ import React from 'react';
 import {Platform ,StyleSheet, KeyboardAvoidingView, View} from 'react-native'
 import Text from '@components/Text'
 import Button from '@components/Button'
+import { showErrorToast } from '@components/Toast';
 import { useDispatch } from 'react-redux';
 import { theme } from '@utils/theme';
 import { setAuth } from '@store/actions/auth';
 import TextInput from '@components/TextInput';
 import auth from '@react-native-firebase/auth';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import AntDesign from "react-native-vector-icons/AntDesign"
+import constants from '@constants';
 
 
 function Login({navigation}: any) {
@@ -14,6 +19,28 @@ function Login({navigation}: any) {
     const [email, setEmail] = React.useState({text:'septianferi74@gmail.com', error: ''});
     const [password, setPassword] = React.useState({text:'123456', error: ''});
     const [isLoading, setLoading] = React.useState(false);
+
+    async function onGoogleButtonPress() {
+        await GoogleSignin.configure({
+            ...constants.GoogleSigninConfigure,
+            offlineAccess: false
+        });
+        const { idToken } = await GoogleSignin.signIn();
+        
+        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+        
+        setLoading(true)
+        auth().signInWithCredential(googleCredential)
+        .then((response) => {
+            dispatch(setAuth(response))
+        })
+        .catch(error => {
+            showErrorToast(error.message);
+        })
+        .finally(()=>{
+            setLoading(false)
+        })
+    }
 
     const signInWithEmailAndPassword = (): void =>{
         setLoading(true)
@@ -23,13 +50,7 @@ function Login({navigation}: any) {
             dispatch(setAuth(response))
         })
         .catch(error => {
-            if (error.code === 'auth/email-already-in-use') {
-                console.log('That email address is already in use!');
-            }
-            if (error.code === 'auth/invalid-email') {
-                console.log('That email address is invalid!');
-            }
-            console.log(error);
+            showErrorToast(error.message);
         })
         .finally(()=>{
             setLoading(false)
@@ -39,9 +60,10 @@ function Login({navigation}: any) {
     return (
         <View style={styles.container}>
             <KeyboardAvoidingView 
-                behavior={Platform.OS==="ios" ? "padding" : "height"}
-                style={styles.container}>
-                <Text style={{alignSelf:"center"}} type="semibold">My Todo Login</Text>
+                behavior={Platform.OS==="ios" ? "padding" : "height"}>
+                    
+                <Text style={styles.title} type="bold" size={10}>Login</Text>
+
                 <TextInput 
                     value={email.text}
                     errorText={email.error}
@@ -55,25 +77,75 @@ function Login({navigation}: any) {
                     onChangeText={(text) => setPassword({...password, text}) }
                     isPassword
                 />
+
                 <Button 
                     loading={isLoading} 
                     onPress={signInWithEmailAndPassword}>
-                    <Text color="white" type="semibold">{isLoading?"Loading...":"Login"}</Text>
+                    <Text color="white" type="semibold">{isLoading?"Loading...":"Sign in"}</Text>
                 </Button>
-                <Button mode="outlined" onPress={()=> navigation.navigate("Register")}>
-                    <Text color={theme.colors.primary} type="semibold">Register</Text>
-                </Button>
+
+                <View style={[styles.row, {alignSelf:"center"}]}>
+                    <Text style={styles.label}>Don’t have an account? </Text>
+                    <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+                        <Text style={styles.link}>Sign up</Text>
+                    </TouchableOpacity>
+                </View>
+                
             </KeyboardAvoidingView>
+            <View style={{flex:.3, marginTop:50}}>
+                <View style={{alignItems:"center",flex:.8, justifyContent:"space-between"}}>
+                    <View style={styles.divider} />
+                    <View style={styles.wrapOr}>
+                        <Text>OR</Text>
+                    </View>
+                </View>
+                <Button 
+                    mode="outlined"
+                    style={{flexDirection:"row"}}
+                    onPress={onGoogleButtonPress}>
+                    <AntDesign name="google" color={theme.colors.primary} size={18} style={{marginRight:4}} />
+                    <Text color={theme.colors.primary} type="semibold">{"Sign in with google"}</Text>
+                </Button>
+            </View>
         </View>
     )
 }
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding:16,
+        padding:32,
         backgroundColor:theme.colors.white,
         justifyContent:"center",
     },
+    divider:{
+        borderBottomWidth: 2,
+        borderColor:theme.colors.defaultBorderColor,
+        width:"100%",
+        position:"absolute",
+        zIndex:1, 
+        top:11
+    },
+    title:{
+        alignSelf:"center",
+        marginBottom:16,
+    },
+    wrapOr:{
+        zIndex:2,
+        position:"absolute",
+        backgroundColor:"white",
+        paddingHorizontal:8
+    },
+      row: {
+        flexDirection: 'row',
+        marginTop: 4,
+      },
+      label: {
+        color: theme.colors.grey,
+      },
+      link: {
+        fontWeight: 'bold',
+        color: theme.colors.primary,
+      },
 });
 
 export default (Login)

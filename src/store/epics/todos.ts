@@ -7,8 +7,10 @@ export const getTodosEpic = (action$: any, store: any) =>
     ofType("REQUEST_TODOS"),
     switchMap(() => 
       firestore()
-      .collection('todos')
-      .where("createBy", "==", store.value.auth.user.uid)
+      .collection(`users`)
+      .doc(store.value.auth.user.uid)
+      .collection(`todos`)
+      .orderBy("createAt", "desc")
       .get()
       .then(response => {
         let payload: any = []
@@ -17,18 +19,19 @@ export const getTodosEpic = (action$: any, store: any) =>
           ...doc.data(),
           fireId: doc.id
         }))
-        payload.sort((a:any ,b:any) => b.createAt - a.createAt)
         return ({type: "SET_TODOS", payload})
       })
     )
 )
 
-export const addTodoEpic = (action$: any) => 
+export const addTodoEpic =  (action$: any, store: any) => 
   action$.pipe(
     ofType("ADD_TODO"),
     switchMap(({payload}: any) => 
       firestore()
-      .collection('todos')
+      .collection(`users`)
+      .doc(store.value.auth.user.uid)
+      .collection(`todos`)
       .add(payload)
       .then(({id: fireId}: any)=> {
         Object.assign(payload,{fireId})
@@ -37,12 +40,14 @@ export const addTodoEpic = (action$: any) =>
     )
 )
 
-export const editTodoEpic = (action$: any) => 
+export const editTodoEpic =  (action$: any, store: any) => 
   action$.pipe(
     ofType("UPDATE_TODO"),
     switchMap(({payload}: any) => 
       firestore()
-      .collection('todos')
+      .collection(`users`)
+      .doc(store.value.auth.user.uid)
+      .collection(`todos`)
       .doc(payload.fireId)
       .update(payload)
       .then(()=> 
@@ -50,12 +55,14 @@ export const editTodoEpic = (action$: any) =>
     )
 )
 
-export const deleteTodoEpic = (action$: any) => 
+export const deleteTodoEpic =  (action$: any, store: any) => 
   action$.pipe(
     ofType("DELETE_TODO"),
     switchMap(({payload}: any) => 
       firestore()
-      .collection('todos')
+      .collection(`users`)
+      .doc(store.value.auth.user.uid)
+      .collection(`todos`)
       .doc(payload.fireId)
       .delete()
       .then(()=> 
