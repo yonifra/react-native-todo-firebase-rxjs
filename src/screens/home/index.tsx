@@ -83,13 +83,12 @@ export default function Home({navigation}: any) {
                     onPress: async () => {
                         await persistor.purge()
                         await AsyncStorage.clear()
-                        try {
-                            await GoogleSignin.revokeAccess();
-                            await GoogleSignin.signOut();
-                            await auth().signOut()
-                        } finally {
-                            RNRestart.Restart();
-                        }
+                        // try {
+                        //     await GoogleSignin.revokeAccess();
+                        //     await GoogleSignin.signOut();
+                        //     await auth().signOut()
+                        // } finally {}
+                        RNRestart.Restart();
                     }
                 }
             ],
@@ -105,7 +104,7 @@ export default function Home({navigation}: any) {
 
     React.useLayoutEffect(() => {
         navigation.setOptions({
-            headerRight:() => (<TouchableOpacity onPress={logout} style={{marginRight:8}}>
+            headerRight:() => (<TouchableOpacity onPress={logout} style={{marginRight:10}}>
                                     <AntDesign name="right" size={24} />
                                 </TouchableOpacity>)
         })
@@ -133,9 +132,10 @@ export default function Home({navigation}: any) {
             //@ts-ignore
             forceInsets={{top:'never'}}
             style={styles.container}>
-              <KeyboardAvoidingView 
-                behavior={Platform.OS==="ios" ? "padding" : "height"}
-                keyboardVerticalOffset={62+insets.bottom}
+              <KeyboardAvoidingView
+                enabled={Platform.OS==="ios"} 
+                behavior={Platform.select({ios:"padding"})}
+                keyboardVerticalOffset={Platform.select({ios:62+insets.bottom})}
                 style={{flex:1}}
                 >
                 <View style={{flex:95}}>
@@ -152,7 +152,7 @@ export default function Home({navigation}: any) {
                         ref={inputRef}
                         type="round"
                         value={todo.title}
-                        style={{flex:.9, marginRight:-8, height:40}}
+                        style={{width:wp(84),marginRight:6, height:40}}
                         onChangeText={title => setTodo(prev => ({...prev, title}))}
                         placeholder="I want to..."
                     />
@@ -200,7 +200,6 @@ const styles = StyleSheet.create({
         borderRadius:20,
         height:40,
         width:40,
-        flex:.11,
     },
     listItem:{
         borderBottomColor:theme.colors.defaultBorderColor,
@@ -215,7 +214,7 @@ const styles = StyleSheet.create({
         borderTopColor:theme.colors.defaultBorderColor,
         justifyContent:"space-between",
         backgroundColor:"white",
-        paddingHorizontal:12,
+        paddingHorizontal:8,
         borderTopWidth:0.5,
         flexDirection:"row", 
         alignSelf:"center",

@@ -1,5 +1,5 @@
-import React from 'react';
-import {Platform ,StyleSheet, KeyboardAvoidingView, View} from 'react-native'
+import React,{useState,useEffect} from 'react';
+import {Platform ,StyleSheet, KeyboardAvoidingView, View, Keyboard} from 'react-native'
 import Text from '@components/Text'
 import Button from '@components/Button'
 import { showErrorToast } from '@components/Toast';
@@ -9,15 +9,17 @@ import { setAuth } from '@store/actions/auth';
 import TextInput from '@components/TextInput';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import AntDesign from "react-native-vector-icons/AntDesign"
 import constants from "@constants";
 
 function Register({navigation}: any) {
     const dispatch = useDispatch()
-    const [email, setEmail] = React.useState({text:'', error: ''});
-    const [password, setPassword] = React.useState({text:'', error: ''});
-    const [isLoading, setLoading] = React.useState(false);
+    const [email, setEmail] = useState({text:'', error: ''});
+    const [password, setPassword] = useState({text:'', error: ''});
+    const [isLoading, setLoading] = useState(false);
+    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+
 
     async function onGoogleButtonPress() {
         await GoogleSignin.configure({
@@ -56,11 +58,31 @@ function Register({navigation}: any) {
         })
     }
 
+    useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener(
+          'keyboardDidShow',
+          () => {
+            setKeyboardVisible(true);
+          }
+        );
+        const keyboardDidHideListener = Keyboard.addListener(
+          'keyboardDidHide',
+          () => {
+            setKeyboardVisible(false);
+          }
+        );
+    
+        return () => {
+          keyboardDidHideListener.remove();
+          keyboardDidShowListener.remove();
+        };
+      }, []);
+
     return (
         <View style={styles.container}>
             <KeyboardAvoidingView 
                 behavior={Platform.OS==="ios" ? "padding" : "height"}>
-                    
+                
                 <Text style={styles.title} type="bold" size={10}>Register</Text>
 
                 <TextInput 
@@ -91,10 +113,10 @@ function Register({navigation}: any) {
                 </View>
                 
             </KeyboardAvoidingView>
-            <View style={{flex:.3, marginTop:50}}>
-                <View style={{alignItems:"center",flex:.8, justifyContent:"space-between"}}>
+            {!isKeyboardVisible && (<View style={{marginTop:60}}>
+                <View style={styles.wrapOR}>
                     <View style={styles.divider} />
-                    <View style={styles.wrapOr}>
+                    <View style={styles.wrapTextOR}>
                         <Text>OR</Text>
                     </View>
                 </View>
@@ -105,7 +127,7 @@ function Register({navigation}: any) {
                     <AntDesign name="google" color={theme.colors.primary} size={18} style={{marginRight:4}} />
                     <Text color={theme.colors.primary} type="semibold">{"Sign up with google"}</Text>
                 </Button>
-            </View>
+            </View>)}
         </View>
     )
 }
@@ -128,11 +150,16 @@ const styles = StyleSheet.create({
         alignSelf:"center",
         marginBottom:16,
     },
-    wrapOr:{
+    wrapTextOR:{
         zIndex:2,
         position:"absolute",
         backgroundColor:"white",
         paddingHorizontal:8
+    },
+    wrapOR:{
+        alignItems:"center", 
+        height:70, 
+        justifyContent:"space-between"
     },
       row: {
         flexDirection: 'row',
