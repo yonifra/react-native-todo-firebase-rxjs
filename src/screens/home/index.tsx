@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     input:{
         width:wp(84),
         marginRight:6, 
-        height:4
+        height:40
     },
     //@ts-ignore
     textItem: (isChecked: boolean) => {
