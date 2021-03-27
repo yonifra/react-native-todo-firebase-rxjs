@@ -65,7 +65,6 @@ const styles = StyleSheet.create({
         marginVertical:8
     },
     input:{
-        ...theme.boxShadowStyle,
         borderColor:theme.colors.defaultBorderColor,
         backgroundColor:theme.colors.white,
         fontFamily:"OpenSans-Regular",
