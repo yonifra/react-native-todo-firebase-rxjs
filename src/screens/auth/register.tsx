@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {Platform ,StyleSheet, KeyboardAvoidingView, View, Keyboard} from 'react-native'
+import {Platform ,StyleSheet, KeyboardAvoidingView, View, Keyboard, TouchableOpacity} from 'react-native'
 import Text from '@components/Text'
 import Button from '@components/Button'
 import { showErrorToast } from '@components/Toast';
@@ -9,14 +9,14 @@ import { setAuth } from '@store/actions/auth';
 import TextInput from '@components/TextInput';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import AntDesign from "react-native-vector-icons/AntDesign"
 import constants from "@constants";
+import { emailValidator, passwordValidator } from '@utils/validators';
 
 function Register({navigation}: any) {
     const dispatch = useDispatch()
-    const [email, setEmail] = useState({text:'', error: ''});
-    const [password, setPassword] = useState({text:'', error: ''});
+    const [email, setEmail] = useState({value:'', error: ''});
+    const [password, setPassword] = useState({value:'', error: ''});
     const [isLoading, setLoading] = useState(false);
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
@@ -44,9 +44,16 @@ function Register({navigation}: any) {
     }
 
     const createUserWithEmailAndPassword = (): void =>{
+        const emailError = emailValidator(email.value);
+        const passwordError = passwordValidator(password.value);
+        if (emailError || passwordError) {
+            setEmail({ ...email, error: emailError });
+            setPassword({ ...password, error: passwordError });
+            return;
+         }
         setLoading(true)
         auth()
-        .createUserWithEmailAndPassword(email.text, password.text)
+        .createUserWithEmailAndPassword(email.value, password.value)
         .then((response) => {
             dispatch(setAuth(response))
         })
@@ -86,16 +93,16 @@ function Register({navigation}: any) {
                 <Text style={styles.title} type="bold" size={10}>Register</Text>
 
                 <TextInput 
-                    value={email.text}
+                    value={email.value}
                     errorText={email.error}
                     placeholder="Type your email"
-                    onChangeText={(text) => setEmail({...email, text}) }
+                    onChangeText={(value) => setEmail({value, error: ''}) }
                 />
                 <TextInput 
-                    value={password.text}
+                    value={password.value}
                     errorText={password.error}
                     placeholder="Type your password"
-                    onChangeText={(text) => setPassword({...password, text}) }
+                    onChangeText={(value) => setPassword({value, error: ''}) }
                     isPassword
                 />
 

@@ -1,23 +1,23 @@
 import React,{useState,useEffect} from 'react';
-import {Platform ,StyleSheet, KeyboardAvoidingView, View, Keyboard} from 'react-native'
+import {Platform ,StyleSheet, KeyboardAvoidingView, View, Keyboard, TouchableOpacity} from 'react-native'
 import Text from '@components/Text'
 import Button from '@components/Button'
 import { showErrorToast } from '@components/Toast';
 import { useDispatch } from 'react-redux';
 import { theme } from '@utils/theme';
+import { emailValidator, passwordValidator } from '@utils/validators';
 import { setAuth } from '@store/actions/auth';
 import TextInput from '@components/TextInput';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import AntDesign from "react-native-vector-icons/AntDesign"
 import constants from '@constants';
 
 
 function Login({navigation}: any) {
     const dispatch = useDispatch()
-    const [email, setEmail] = useState({text:'septianferi74@gmail.com', error: ''});
-    const [password, setPassword] = useState({text:'123456', error: ''});
+    const [email, setEmail] = useState({value:'septianferi74@gmail.com', error: ''});
+    const [password, setPassword] = useState({value:'123456', error: ''});
     const [isLoading, setLoading] = useState(false);
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
@@ -26,27 +26,39 @@ function Login({navigation}: any) {
             ...constants.GoogleSigninConfigure,
             offlineAccess: false
         });
-        const { idToken } = await GoogleSignin.signIn();
+        try {
+            const { idToken } = await GoogleSignin.signIn();
         
-        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-        
-        setLoading(true)
-        auth().signInWithCredential(googleCredential)
-        .then((response) => {
-            dispatch(setAuth(response))
-        })
-        .catch(error => {
+            const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+            
+            setLoading(true)
+            auth().signInWithCredential(googleCredential)
+            .then((response) => {
+                dispatch(setAuth(response))
+            })
+            .catch(error => {
+                showErrorToast(error.message);
+            })
+            .finally(()=>{
+                setLoading(false)
+            })
+        } catch (error) {
             showErrorToast(error.message);
-        })
-        .finally(()=>{
-            setLoading(false)
-        })
+        }
+        
     }
 
     const signInWithEmailAndPassword = (): void =>{
+        const emailError = emailValidator(email.value);
+        const passwordError = passwordValidator(password.value);
+        if (emailError || passwordError) {
+            setEmail({ ...email, error: emailError });
+            setPassword({ ...password, error: passwordError });
+            return;
+         }
         setLoading(true)
         auth()
-        .signInWithEmailAndPassword(email.text, password.text)
+        .signInWithEmailAndPassword(email.value, password.value)
         .then((response) => {
             dispatch(setAuth(response))
         })
@@ -86,16 +98,16 @@ function Login({navigation}: any) {
                     <Text style={styles.title} type="bold" size={10}>Login</Text>
 
                     <TextInput 
-                        value={email.text}
+                        value={email.value}
                         errorText={email.error}
                         placeholder="Type your email"
-                        onChangeText={(text) => setEmail({...email, text}) }
+                        onChangeText={(value) => setEmail({value, error: ''}) }
                     />
                     <TextInput 
-                        value={password.text}
+                        value={password.value}
                         errorText={password.error}
                         placeholder="Type your password"
-                        onChangeText={(text) => setPassword({...password, text}) }
+                        onChangeText={(value) => setPassword({value, error: ''}) }
                         isPassword
                     />
 

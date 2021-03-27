@@ -19,8 +19,8 @@ function App() {
           <StatusBar 
             backgroundColor={theme.colors.white} 
             barStyle="dark-content" />
-          <FlashMessage position="top" />
           <Routes />
+          <FlashMessage position="top" />
       </PersistGate>
     </Provider>
   );
