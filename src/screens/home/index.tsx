@@ -52,16 +52,19 @@ export default function Home({navigation}: any) {
         createAt?:Date;
         createBy?:string }>({title:""});
     
-    const handleAddOrUpdateTodo = (): void => {
-        if(todo.title=="")return;
+    const onAddOrUpdateTodo = (): void => {
+        const title = todo.title.trim()
+        if(title=="")return;
         if(todo.id==null){
             Object.assign(todo,{
+                title,
                 id: uuidv4(),
                 createAt: Date.now()
             })
             dispatch(addTodo(todo))
         }else{
             Object.assign(todo,{
+                title,
                 updateAt: Date.now()
             })
             dispatch(editTodo(todo))
@@ -165,7 +168,7 @@ export default function Home({navigation}: any) {
                     />
                     <Button 
                         style={styles.buttonCircle}
-                        onPress={handleAddOrUpdateTodo}>
+                        onPress={onAddOrUpdateTodo}>
                         {todo?.id==null 
                             ? (<Feather name="plus" size={20} color="white" />)
                             : (<EvilIcons name="pencil" size={20} color="white" />)}
