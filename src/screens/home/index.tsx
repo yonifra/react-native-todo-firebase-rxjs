@@ -104,7 +104,9 @@ export default function Home({navigation}: any) {
 
     React.useLayoutEffect(() => {
         navigation.setOptions({
-            headerRight:() => (<TouchableOpacity onPress={logout} style={{marginRight:10}}>
+            headerRight:() => (<TouchableOpacity 
+                                    onPress={logout} 
+                                    style={{marginRight:10}}>
                                     <AntDesign name="right" size={24} />
                                 </TouchableOpacity>)
         })
@@ -118,7 +120,12 @@ export default function Home({navigation}: any) {
                 inputRef?.current?.focus()
             }}
             style={styles.listItem}>
-                <Text maxLines={2} style={{flex:.9}}>{item.title}</Text>
+                <Text 
+                    //@ts-ignore
+                    style={styles.textItem(item?.isChecked)}
+                    maxLines={2}>
+                    {item.title}
+                </Text>
                 <TouchableOpacity 
                     style={{flex:.05}}
                     onPress={()=>dispatch(deleteTodo(item))}>
@@ -152,7 +159,7 @@ export default function Home({navigation}: any) {
                         ref={inputRef}
                         type="round"
                         value={todo.title}
-                        style={{width:wp(84),marginRight:6, height:40}}
+                        style={styles.input}
                         onChangeText={title => setTodo(prev => ({...prev, title}))}
                         placeholder="I want to..."
                     />
@@ -218,6 +225,18 @@ const styles = StyleSheet.create({
         borderTopWidth:0.5,
         flexDirection:"row", 
         alignSelf:"center",
+    },
+    input:{
+        width:wp(84),
+        marginRight:6, 
+        height:4
+    },
+    //@ts-ignore
+    textItem: (isChecked: boolean) => {
+        return ({
+            flex:.9, 
+            textDecorationLine: isChecked ? "line-through" : "none"
+        })
     }
 })
 
