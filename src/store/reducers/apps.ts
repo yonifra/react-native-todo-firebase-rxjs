@@ -2,7 +2,7 @@ const initialState = {
     isSplashing: true,
   }
   
-export default (state= initialState, {type}: any) => {
+const apps = (state= initialState, {type}: any) => {
     switch (type) {
       case 'SET_DONE_SPLASH':
         return {
@@ -13,3 +13,6 @@ export default (state= initialState, {type}: any) => {
         return state;
     }
 };
+  
+export default apps;
+    

@@ -3,7 +3,7 @@ const initialState = {
     token:null
   }
   
-export default (state= initialState, {type, payload}: any) => {
+const auth = (state= initialState, {type, payload}: any) => {
     switch (type) {
       case 'SET_AUTH':
         return {
@@ -14,3 +14,6 @@ export default (state= initialState, {type, payload}: any) => {
         return state;
     }
 };
+  
+export default auth;
+    
