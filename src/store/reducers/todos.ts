@@ -2,7 +2,7 @@ const initialState = {
   data:[]
 }
 
-const todos = (state= initialState, {type, payload}: any) => {
+export default (state= initialState, {type, payload}: any) => {
     switch (type) {
       case 'SET_TODOS':
         return {
@@ -28,6 +28,3 @@ const todos = (state= initialState, {type, payload}: any) => {
         return state;
     }
 };
-  
-export default todos;
-  
