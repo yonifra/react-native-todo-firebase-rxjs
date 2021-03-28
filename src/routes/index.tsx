@@ -50,7 +50,7 @@ function Routes() {
         initialRouteName="Home">
         <StackNav.Screen name="Home" component={Home} 
           options={{ 
-            headerTitle: "ALL TASKS",
+            headerTitle: "All Tasks",
             headerStyle:{
               elevation: 0,
               shadowOpacity: 0,

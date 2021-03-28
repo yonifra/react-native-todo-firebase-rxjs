@@ -16,5 +16,6 @@ export const theme: any = {
     warningMessage:"#FFED8F",
     disabled:"#dddddd",
     defaultHeader:"#A59D9A",
+    grey2:"#E1E1E1"
   },
 };

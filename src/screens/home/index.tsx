@@ -38,6 +38,7 @@ import {
     getTodos,
     addTodo,
 } from '@store/actions/todos';
+import { color } from "react-native-reanimated";
 
 
 export default function Home({navigation}: any) {
@@ -133,9 +134,9 @@ export default function Home({navigation}: any) {
             style={styles.listItem}>
                  <CheckBox
                     style={styles.checkBox}
-                    tintColors={{true: theme.colors.primary}}
-                    onTintColor={theme.colors.primary}
-                    onFillColor={theme.colors.primary}
+                    tintColors={{true: theme.colors.grey2}}
+                    onTintColor={theme.colors.grey2}
+                    onFillColor={theme.colors.grey2}
                     onCheckColor={theme.colors.white}
                     animationDuration={.2}
                     lineWidth={1.5}
@@ -262,7 +263,8 @@ const styles = StyleSheet.create({
     textItem: (isDone: boolean) => {
         return ({
             flex:.9,
-            textDecorationLine: isDone ? "line-through" : "none"
+            textDecorationLine: isDone ? "line-through" : "none",
+            color: isDone ? theme.colors.grey2 : '#333333'  
         })
     },
     checkBox:{
