@@ -18,6 +18,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import AntDesign from "react-native-vector-icons/AntDesign"
 import EvilIcons from "react-native-vector-icons/EvilIcons"
+import CheckBox from '@react-native-community/checkbox';
 import Feather from "react-native-vector-icons/Feather"
 import {useSelector, useDispatch} from "react-redux"
 import auth from '@react-native-firebase/auth';
@@ -49,6 +50,7 @@ export default function Home({navigation}: any) {
     const [todo, setTodo] = React.useState<{ 
         id?:string;
         title:string;
+        isDone?:boolean;
         createAt?:Date;
         createBy?:string }>({title:""});
     
@@ -59,6 +61,7 @@ export default function Home({navigation}: any) {
             Object.assign(todo,{
                 title,
                 id: uuidv4(),
+                isDone:false,
                 createAt: Date.now()
             })
             dispatch(addTodo(todo))
@@ -115,28 +118,47 @@ export default function Home({navigation}: any) {
         })
     },[navigation])
 
+
     const renderItem = ({item}: any) => (
         <TouchableOpacity 
             key={item.id} 
+            activeOpacity={.5}
             onLongPress={(): void =>{
                 setTodo(item)
                 inputRef?.current?.focus()
             }}
+            onPress={() => {
+                dispatch(editTodo({...item, isDone: !item?.isDone}))
+            }}
             style={styles.listItem}>
+                 <CheckBox
+                    style={{height: 22, width: 22}}
+                    tintColors={{true: theme.colors.primary}}
+                    onTintColor={theme.colors.primary}
+                    onFillColor={theme.colors.primary}
+                    onCheckColor={theme.colors.white}
+                    animationDuration={.2}
+                    boxType="circle"
+                    value={item?.isDone}
+                    onValueChange={(isDone: boolean) => {
+                        dispatch(editTodo({...item, isDone}))
+                    }}
+                />
                 <Text 
                     //@ts-ignore
-                    style={styles.textItem(item?.isChecked)}
+                    style={styles.textItem(item?.isDone)}
                     maxLines={2}>
                     {item.title}
                 </Text>
-                <TouchableOpacity 
-                    style={{flex:.05}}
-                    onPress={()=>dispatch(deleteTodo(item))}>
-                    <AntDesign name="closecircle" color="#88939E" size={16} />
-                </TouchableOpacity>
+                {item?.isDone && 
+                    (<TouchableOpacity 
+                        style={{flex:.05}}
+                        onPress={()=>dispatch(deleteTodo(item))}>
+                        <AntDesign name="closecircle" color="#88939E" size={16} />
+                    </TouchableOpacity>)}
         </TouchableOpacity>
     )
-    
+
     return (
         <SafeAreaView 
             //@ts-ignore
@@ -235,10 +257,11 @@ const styles = StyleSheet.create({
         height:40
     },
     //@ts-ignore
-    textItem: (isChecked: boolean) => {
+    textItem: (isDone: boolean) => {
         return ({
-            flex:.9, 
-            textDecorationLine: isChecked ? "line-through" : "none"
+            flex: isDone ? .9 : 1,
+            marginLeft: isDone ? 0 : 9, 
+            textDecorationLine: isDone ? "line-through" : "none"
         })
     }
 })
