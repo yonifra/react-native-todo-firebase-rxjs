@@ -132,12 +132,13 @@ export default function Home({navigation}: any) {
             }}
             style={styles.listItem}>
                  <CheckBox
-                    style={{height: 22, width: 22}}
+                    style={styles.checkBox}
                     tintColors={{true: theme.colors.primary}}
                     onTintColor={theme.colors.primary}
                     onFillColor={theme.colors.primary}
                     onCheckColor={theme.colors.white}
                     animationDuration={.2}
+                    lineWidth={1.5}
                     boxType="circle"
                     value={item?.isDone}
                     onValueChange={(isDone: boolean) => {
@@ -150,12 +151,13 @@ export default function Home({navigation}: any) {
                     maxLines={2}>
                     {item.title}
                 </Text>
-                {item?.isDone && 
+                {item?.isDone ? 
                     (<TouchableOpacity 
                         style={{flex:.05}}
                         onPress={()=>dispatch(deleteTodo(item))}>
                         <AntDesign name="closecircle" color="#88939E" size={16} />
-                    </TouchableOpacity>)}
+                    </TouchableOpacity>)
+                    : <View style={{flex:.05}}/>}
         </TouchableOpacity>
     )
 
@@ -236,7 +238,7 @@ const styles = StyleSheet.create({
     listItem:{
         borderBottomColor:theme.colors.defaultBorderColor,
         justifyContent:"space-between",
-        borderBottomWidth:0.2,
+        borderBottomWidth:.3,
         paddingHorizontal:16,
         flexDirection:"row",
         alignItems:"center",
@@ -259,10 +261,14 @@ const styles = StyleSheet.create({
     //@ts-ignore
     textItem: (isDone: boolean) => {
         return ({
-            flex: isDone ? .9 : 1,
-            marginLeft: isDone ? 0 : 9, 
+            flex:.9,
             textDecorationLine: isDone ? "line-through" : "none"
         })
-    }
+    },
+    checkBox:{
+        height: 16, 
+        width: 16,
+        marginRight:4
+    },
 })
 
