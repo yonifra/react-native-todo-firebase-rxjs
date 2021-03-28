@@ -38,7 +38,6 @@ import {
     getTodos,
     addTodo,
 } from '@store/actions/todos';
-import { color } from "react-native-reanimated";
 
 
 export default function Home({navigation}: any) {
