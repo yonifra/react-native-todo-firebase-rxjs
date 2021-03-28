@@ -17,7 +17,7 @@ const todos = (state= initialState, {type, payload}: any) => {
       case 'UPDATE_TODO':
           return {
             ...state,
-            data: state.data.map((e: any) => e.id===payload?.id ? {e, ...payload} : e)
+            data: state.data.map((e: any) => e.id===payload?.id ? {...e, ...payload} : e)
           }
       case 'DELETE_TODO':
         return {
