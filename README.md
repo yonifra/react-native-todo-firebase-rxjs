@@ -12,6 +12,12 @@
     <img width="200" src="https://github.com/feriferdinan/react-native-todo-firebase-rxjs/blob/master/assets/preview/home.png">
 </div>
 
+## Features 
+* Login and Register with email & password
+* Login and Register with google
+* Check done todo
+* Add, Update, Delete todo 
+
 ## Table of Contents
 
 - [Requirements](#requirements)
