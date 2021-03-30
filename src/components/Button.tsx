@@ -7,7 +7,7 @@ interface Props {
     mode?: 'outlined' | 'default' | 'link';
     onPress?: ((event: any) => void) | undefined;
     children?: ReactNode | null;
-    style?: any;
+    style?: object;
     loading?:boolean;
 }
 

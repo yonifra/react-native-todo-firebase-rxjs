@@ -2,23 +2,22 @@ import React from 'react';
 import {TextInput,StyleSheet,View, Text, Image} from 'react-native';
 import { theme } from '@utils/theme';
 
-type Ref = React.LegacyRef<TextInput> | undefined | null;
 interface Props {
-    type:'round' | 'default'
+    type?:'round' | 'default'
     isPassword?: boolean;
     isNumber?:boolean;
     uppercase?:boolean;
     errorText?:string;
     icon?: any;
-    iconStyle?:any;
-    style?:any;
+    iconStyle?:object;
+    style?:object;
     value:string;
     placeholder?:string;
     autoFocus?:boolean;
     onChangeText: (text: string) => void;
 }
 
-const CustomTextInput= React.forwardRef((props: Partial<Props>, ref?: Ref) => {
+const CustomTextInput= React.forwardRef<TextInput, Props>((props, ref) => {
     const [state, setState] = React.useState({
         hide: true,
         focus:false

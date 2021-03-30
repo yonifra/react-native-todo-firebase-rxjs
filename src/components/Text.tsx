@@ -8,7 +8,7 @@ interface Props {
   color?: string;
   size?: number;
   children: string | ReactNode | null;
-  style?:any;
+  style?:object;
   maxLines?:number;
 }
 
