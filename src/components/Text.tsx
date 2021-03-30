@@ -1,5 +1,5 @@
 import React,{ReactNode} from 'react';
-import {Text, Dimensions,StyleSheet} from 'react-native';
+import {Text, Dimensions,StyleSheet,StyleProp, TextStyle} from 'react-native';
 import {RFValue as fs} from 'react-native-responsive-fontsize';
 const {width} = Dimensions.get('window');
 
@@ -8,7 +8,7 @@ interface Props {
   color?: string;
   size?: number;
   children: string | ReactNode | null;
-  style?:object;
+  style?:StyleProp<TextStyle>;
   maxLines?:number;
 }
 

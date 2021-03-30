@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInput,StyleSheet,View, Text, Image} from 'react-native';
+import {TextInput,StyleSheet,View, Text, Image, TextStyle, StyleProp, ImageStyle, ImageSourcePropType} from 'react-native';
 import { theme } from '@utils/theme';
 
 interface Props {
@@ -9,12 +9,12 @@ interface Props {
     uppercase?:boolean;
     errorText?:string;
     icon?: any;
-    iconStyle?:object;
-    style?:object;
+    iconStyle?:StyleProp<ImageStyle>;
+    style?:StyleProp<TextStyle>;
     value:string;
     placeholder?:string;
     autoFocus?:boolean;
-    onChangeText: (text: string) => void;
+    onChangeText?: ((text: string) => void);
 }
 
 const CustomTextInput= React.forwardRef<TextInput, Props>((props, ref) => {
@@ -53,11 +53,13 @@ const CustomTextInput= React.forwardRef<TextInput, Props>((props, ref) => {
     );
 });
 
-const InputIcon: React.FC<{ source:any; style:any; }> = React.memo(({source,style}) => (
-    <View style={styles.wrapIcon}>
-        <Image source={source} style={[styles.icon,style]} /> 
-    </View>
-))
+const InputIcon: React.FC<{ source:ImageSourcePropType; style:StyleProp<ImageStyle>; }> = 
+    React.memo(({source,style}) => (
+        <View style={styles.wrapIcon}>
+            <Image source={source} style={[styles.icon, style]} /> 
+        </View>
+    )
+)
 
 const styles = StyleSheet.create({
     container:{
