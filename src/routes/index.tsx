@@ -35,7 +35,7 @@ function Routes() {
         <AuthStack.Navigator
           screenOptions={TransitionPresets.ScaleFromCenterAndroid}
           headerMode="none"
-          initialRouteName="Splash">
+          initialRouteName="Login">
           <AuthStack.Screen name="Login" component={Login} />
           <AuthStack.Screen name="Register" component={Register} />
         </AuthStack.Navigator>
