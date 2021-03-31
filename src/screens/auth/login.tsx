@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {Platform ,StyleSheet, KeyboardAvoidingView, View, Keyboard, TouchableOpacity} from 'react-native'
+import {Platform ,StyleSheet, KeyboardAvoidingView, View, Keyboard, TouchableOpacity, Image} from 'react-native'
 import Text from '@components/Text'
 import Button from '@components/Button'
 import { showErrorToast } from '@components/Toast';
@@ -12,12 +12,15 @@ import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import AntDesign from "react-native-vector-icons/AntDesign"
 import constants from '@constants';
+import PaperInput from 'components/PaperInput';
+import Logo from 'components/Logo';
+import PaperButton from 'components/PaperButton';
 
 
 function Login({navigation}: any) {
     const dispatch = useDispatch()
-    const [email, setEmail] = useState({value:'septianferi74@gmail.com', error: ''});
-    const [password, setPassword] = useState({value:'123456', error: ''});
+    const [email, setEmail] = useState({value:'', error: ''});
+    const [password, setPassword] = useState({value:'', error: ''});
     const [isLoading, setLoading] = useState(false);
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
@@ -92,53 +95,64 @@ function Login({navigation}: any) {
 
     return (
         <View style={styles.container}>
+                <Logo 
+                    style={{alignSelf:"center"}}
+                    source={require("../../../assets/images/arvis_logo_black.png")} 
+                />
+                {!isKeyboardVisible && (<View>
+                    <PaperButton 
+                        mode="outlined"
+                        onPress={onGoogleButtonPress}>
+                            <Image 
+                                style={{width:20,height:20,resizeMode:"contain", marginRight:6}}
+                                source={require("../../../assets/images/google.png")}  />
+                            <Text color={theme.colors.grey} size={7}>{"Masuk menggunakan Google"}</Text>
+                    </PaperButton>
+                    <View style={styles.wrapOR}>
+                        <View style={styles.divider} />
+                        <View style={styles.wrapTextOR}>
+                            <Text color="rgba(12, 12, 12, 0.5)">atau masuk menggunakan email</Text>
+                        </View>
+                    </View>
+                </View>)}
             <KeyboardAvoidingView
-               behavior={Platform.OS==="ios" ? "padding" : "height"}
-               >
-                    <Text style={styles.title} type="bold" size={10}>Login</Text>
-
-                    <TextInput 
+               behavior={Platform.OS==="ios" ? "padding" : "height"} >
+                    <PaperInput 
                         value={email.value}
                         errorText={email.error}
-                        placeholder="Type your email"
+                        placeholder="ex: myemail@anydomain.com"
                         onChangeText={(value) => setEmail({value, error: ''}) }
                     />
-                    <TextInput 
+                    <PaperInput 
                         value={password.value}
                         errorText={password.error}
-                        placeholder="Type your password"
+                        placeholder="************"
                         onChangeText={(value) => setPassword({value, error: ''}) }
                         isPassword
                     />
 
-                    <Button 
-                        loading={isLoading} 
-                        onPress={signInWithEmailAndPassword}>
-                        <Text color="white" type="semibold">{isLoading?"Loading...":"Sign in"}</Text>
-                    </Button>
-
-                    <View style={[styles.row, {alignSelf:"center"}]}>
-                        <Text style={styles.label}>Don’t have an account? </Text>
+                    <View style={[styles.row, {alignSelf:"flex-end"}]}>
                         <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-                            <Text style={styles.link}>Sign up</Text>
+                            <Text color="red" >Lupa kata sandi</Text>
                         </TouchableOpacity>
                     </View>
-            </KeyboardAvoidingView>
-            {!isKeyboardVisible && (<View style={{marginTop:60}}>
-                <View style={styles.wrapOR}>
-                    <View style={styles.divider} />
-                    <View style={styles.wrapTextOR}>
-                        <Text>OR</Text>
+
+                    <PaperButton 
+                        loading={isLoading} 
+                        onPress={signInWithEmailAndPassword}>
+                        <Text color="white" type="semibold">{isLoading?"Loading...":"Log in"}</Text>
+                    </PaperButton>
+
+                   
+                    <View style={[styles.row, {alignSelf:"center"}]}>
+                        <Text style={styles.label}>Belum memiliki akun? </Text>
+                        <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+                            <Text style={styles.link}>Daftar</Text>
+                        </TouchableOpacity>
                     </View>
-                </View>
-                <Button 
-                    mode="outlined"
-                    style={{flexDirection:"row"}}
-                    onPress={onGoogleButtonPress}>
-                    <AntDesign name="google" color={theme.colors.primary} size={18} style={{marginRight:4}} />
-                    <Text color={theme.colors.primary} type="semibold">{"Sign in with google"}</Text>
-                </Button>
-            </View>)}
+
+            </KeyboardAvoidingView>
+            
         </View>
     )
 }
@@ -170,6 +184,7 @@ const styles = StyleSheet.create({
     wrapOR:{
         alignItems:"center", 
         height:70, 
+        marginTop:20,
         justifyContent:"space-between"
     },
       row: {
