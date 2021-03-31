@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
   },
   thin: {
     fontSize: fs(9, width),
-    fontFamily: 'OpenSans-Thin',
+    fontFamily: 'OpenSans-Light',
+    fontWeight:'500'
   },
   regular: {
     fontSize: fs(9, width),

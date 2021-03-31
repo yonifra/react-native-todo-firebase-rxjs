@@ -1,7 +1,8 @@
 import React, { memo } from 'react';
-import { View, StyleSheet, Text, StyleProp, TextStyle } from 'react-native';
+import { View, StyleSheet, StyleProp, TextStyle } from 'react-native';
 import { TextInput as Input } from 'react-native-paper';
-import { theme } from '../utils/theme';
+import { theme } from '@utils/theme';
+import Text from '@components/Text'
 
 interface Props {
     mode?:'outlined' | 'flat'
@@ -10,6 +11,7 @@ interface Props {
     uppercase?:boolean;
     errorText?:string;
     style?:StyleProp<TextStyle>;
+    label:string;
     value:string;
     placeholder?:string;
     autoFocus?:boolean;
@@ -24,6 +26,7 @@ const PaperInput: React.FC<Props> = (props) => {
     
     return (
     <View style={styles.container}>
+        {props.label ? <Text style={styles.label}>{props.label}</Text> : null}
         <Input
             value={props.value}
             placeholder={props.placeholder}
@@ -32,7 +35,7 @@ const PaperInput: React.FC<Props> = (props) => {
             theme={{ colors: {
                 primary: theme.colors.primary, 
                 text:theme.colors.black,
-                // underlineColor: 'transparent' 
+                // placeholder:"grey"
             } }}
             style={styles.input}
             selectionColor={theme.colors.primary}
@@ -61,6 +64,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
     paddingTop: 4,
   },
+  label:{
+      color:'rgba(0, 0, 0, 0.54)'
+  }
 });
 
 export default memo(PaperInput);

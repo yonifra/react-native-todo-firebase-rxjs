@@ -1,8 +1,7 @@
 export const theme: any = {
   colors: {
     background:"#fff",
-    primary: "#27A5EE",
-    secondary: "#78C671",
+    primary: "#5B5B5B",
     error: "#F83231",
     light: "#F8F8F8",
     grey: "#94989f",
@@ -16,6 +15,7 @@ export const theme: any = {
     warningMessage:"#FFED8F",
     disabled:"#dddddd",
     defaultHeader:"#A59D9A",
-    grey2:"#E1E1E1"
+    grey2:"#E1E1E1",
+    button:""
   },
 };

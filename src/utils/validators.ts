@@ -1,15 +1,15 @@
 export const emailValidator = (email:string) => {
     const re = /\S+@\S+\.\S+/;
 
-    if (!email || email.length <= 0) return 'Email cannot be empty.';
-    if (!re.test(email)) return 'Ooops! We need a valid email address.';
+    if (!email || email.length <= 0) return 'Email tidak boleh kosong.';
+    if (!re.test(email)) return 'Pastikan penulisan email telah sesuai.';
 
     return '';
 };
 
 export const passwordValidator = (password: string) => {
-    if (!password || password.length <= 0) return 'Password cannot be empty.';
-    if (password.length < 6) return 'Minimum password of at least 6 digits.';
+    if (!password || password.length <= 0) return 'Password tidak boleh kosong.';
+    if (password.length < 6) return 'Panjang kata sandi minimal 6 karakter';
 
     return '';
 };
