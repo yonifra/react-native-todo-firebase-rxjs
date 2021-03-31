@@ -29,13 +29,13 @@ const PaperInput: React.FC<Props> = (props) => {
         {props.label ? <Text style={styles.label}>{props.label}</Text> : null}
         <Input
             value={props.value}
+            error={!!props.errorText}
             placeholder={props.placeholder}
             autoFocus={props.autoFocus}
             onChangeText={props.onChangeText}
             theme={{ colors: {
                 primary: theme.colors.primary, 
                 text:theme.colors.black,
-                // placeholder:"grey"
             } }}
             style={styles.input}
             selectionColor={theme.colors.primary}
