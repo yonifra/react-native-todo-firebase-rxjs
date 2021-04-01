@@ -114,7 +114,9 @@ function Login({navigation}: any) {
         <View style={styles.container}>
             <KeyboardAvoidingView
                behavior={Platform.OS==="ios" ? "padding" : "height"}>
-                <ScrollView showsVerticalScrollIndicator={false}>
+                <ScrollView
+                    keyboardShouldPersistTaps="handled" 
+                    showsVerticalScrollIndicator={false}>
                    <Logo 
                         style={{alignSelf:"center"}}
                         source={require("../../../assets/images/arvis_logo_black.png")} 
@@ -206,7 +208,6 @@ const styles = StyleSheet.create({
     iconButton: {
         width:16,
         height:16,
-        marginVertical:-1,
         resizeMode:"contain", 
         marginRight:10
     }

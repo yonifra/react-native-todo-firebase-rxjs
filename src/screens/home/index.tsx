@@ -179,6 +179,7 @@ export default function Home({navigation}: any) {
                         keyExtractor={item=> item.id}
                         showsVerticalScrollIndicator={false}
                         ListEmptyComponent={EmptyComponent}
+                        keyboardShouldPersistTaps="handled"
                     />
                 </View>
                 <View style={styles.compose}>

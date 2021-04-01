@@ -98,7 +98,7 @@ function Register({navigation}: any) {
                 <Image 
                     style={styles.iconButton}
                     source={require("../../../assets/images/google.png")}  />
-                <Text color={"#5b5b5b"} type="thin">{"Buat akun menggunakan Google"}</Text>
+                <Text color={"#5b5b5b"} type="thin">{"Buat menggunakan Google"}</Text>
             </PaperButton>
             <View style={styles.wrapOR}>
                 <View style={styles.divider} />
@@ -113,7 +113,9 @@ function Register({navigation}: any) {
         <View style={styles.container}>
             <KeyboardAvoidingView
                behavior={Platform.OS==="ios" ? "padding" : "height"}>
-                <ScrollView showsVerticalScrollIndicator={false}>
+                <ScrollView 
+                    keyboardShouldPersistTaps="handled" 
+                    showsVerticalScrollIndicator={false}>
                     <Logo 
                         style={{alignSelf:"center"}}
                         source={require("../../../assets/images/arvis_logo_black.png")} 
@@ -207,7 +209,6 @@ const styles = StyleSheet.create({
     iconButton: {
         width:16,
         height:16,
-        marginVertical:-1,
         resizeMode:"contain", 
         marginRight:10
     }
