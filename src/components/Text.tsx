@@ -1,8 +1,7 @@
-import React,{ReactNode} from 'react';
+import React,{ReactNode,memo} from 'react';
 import {Text, Dimensions,StyleSheet,StyleProp, TextStyle} from 'react-native';
 import {RFValue as fs} from 'react-native-responsive-fontsize';
-const {width, height} = Dimensions.get('window');
-
+import { useOrientation } from 'hooks/useOrientation';
 interface Props {
   type?: 'default' | 'thin' | 'regular' | 'semibold' | 'bold';
   color?: string;
@@ -16,10 +15,11 @@ const Typography: React.FC<Props> = props => {
   const TextStyles = styles[props.type || 'default'];
   const colors = {
       color: props.color || '#333333',
-    },
-    {width} = Dimensions.get('window');
+    };
+  // const {width} = Dimensions.get("window")
+  // const standardScreenHeight = useOrientation() === "LANDSCAPE" ? width : undefined
   const sizeText = {
-    fontSize: props.size ? fs(props.size, width) : fs(8, width),
+    fontSize: props.size ? fs(props.size) : fs(14),
   };
   return (
     <Text
@@ -33,27 +33,27 @@ const Typography: React.FC<Props> = props => {
 
 const styles = StyleSheet.create({
   default: {
-    fontSize: fs(7, width),
+    fontSize: fs(13),
     fontFamily: 'OpenSans-Regular',
   },
   thin: {
-    fontSize: fs(9, width),
+    fontSize: fs(14),
     fontFamily: 'OpenSans-Light',
     fontWeight:'500'
   },
   regular: {
-    fontSize: fs(9, width),
+    fontSize: fs(14),
     fontFamily: 'OpenSans-Regular',
   },
   semibold: {
-    fontSize: fs(9, width),
+    fontSize: fs(14),
     fontFamily: 'OpenSans-SemiBold',
   },
   bold: {
-    fontSize: fs(9, width),
+    fontSize: fs(14),
     fontFamily: 'OpenSans-Bold',
   },
 });
 
 
-export default Typography;
+export default memo(Typography);

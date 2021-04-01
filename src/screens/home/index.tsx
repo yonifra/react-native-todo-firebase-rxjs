@@ -12,7 +12,7 @@ import {
     Alert,
 } from "react-native"
 
-import { widthPercentageToDP as wp } from "react-native-responsive-screen";
+import { heightPercentageToDP, widthPercentageToDP as wp } from "react-native-responsive-screen";
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -214,7 +214,7 @@ const EmptyComponent = () => (
                     height:wp(70)
                 }}
              />
-        <Text type="semibold" size={10}>There are no tasks today</Text>
+        <Text type="semibold" size={18}>There are no tasks today</Text>
     </View>
 )
 

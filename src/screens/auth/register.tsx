@@ -90,24 +90,6 @@ function Register({navigation}: any) {
         };
       }, []);
 
-      const SocialLogin = () => (
-        <>
-            <PaperButton 
-                mode="outlined"
-                onPress={onGoogleButtonPress}>
-                <Image 
-                    style={styles.iconButton}
-                    source={require("../../../assets/images/google.png")}  />
-                <Text color={"#5b5b5b"} type="thin">{"Buat menggunakan Google"}</Text>
-            </PaperButton>
-            <View style={styles.wrapOR}>
-                <View style={styles.divider} />
-                <View style={styles.wrapTextOR}>
-                    <Text color="rgba(12, 12, 12, 0.5)">atau menggunakan email</Text>
-                </View>
-            </View>
-        </>
-    )
 
     return (
         <View style={styles.container}>
@@ -116,19 +98,36 @@ function Register({navigation}: any) {
                 <ScrollView 
                     keyboardShouldPersistTaps="handled" 
                     showsVerticalScrollIndicator={false}>
-                    <Logo 
-                        style={{alignSelf:"center"}}
-                        source={require("../../../assets/images/arvis_logo_black.png")} 
-                    />
 
-                    {!isKeyboardVisible && (<SocialLogin />)}
+                    <Logo style={styles.logo} source={require("../../../assets/images/arvis_logo_black.png")} />
+
+                    {!isKeyboardVisible && (
+                        <>
+                            <PaperButton 
+                                mode="outlined"
+                                onPress={onGoogleButtonPress}>
+                                <View style={styles.rowButton}>
+                                    <Image 
+                                        style={styles.iconButton}
+                                        source={require("../../../assets/images/google.png")}  />
+                                    <Text color={"#5b5b5b"} type="thin">{"Masuk menggunakan Google"}</Text>
+                                </View>
+                            </PaperButton>
+                            <View style={styles.wrapOR}>
+                                <View style={styles.divider} />
+                                <View style={styles.wrapTextOR}>
+                                    <Text color="rgba(12, 12, 12, 0.5)">atau menggunakan email</Text>
+                                </View>
+                            </View>
+                        </>
+                    )}
 
                     <PaperInput
                         label="Nama Lengkap"
                         value={name.value}
                         errorText={name.error}
                         placeholder="contoh: Anton Budo Cahyadi"
-                        onChangeText={(value) => setEmail({value, error: ''}) }
+                        onChangeText={(value) => setName({value, error: ''}) }
                     />
 
                     <PaperInput
@@ -206,11 +205,21 @@ const styles = StyleSheet.create({
         // fontWeight: 'bold',
         color: 'rgb(43, 107, 160)',
     },
+    rowButton:{
+        justifyContent:"center",
+        flexDirection:"row",
+        alignItems:"center",
+        paddingTop:4,
+        flex:1,
+    },
     iconButton: {
+        resizeMode:"contain",
+        marginRight:6,
         width:16,
         height:16,
-        resizeMode:"contain", 
-        marginRight:10
+    },
+    logo:{
+        alignSelf:"center"
     }
 });
 

@@ -28,32 +28,34 @@ const PaperInput: React.FC<Props> = (props) => {
     return (
     <View style={styles.container}>
         {props.label ? <Text style={styles.label}>{props.label}</Text> : null}
-        <Input
-            value={props.value}
-            error={!!props.errorText}
-            placeholder={props.placeholder}
-            autoFocus={props.autoFocus}
-            onChangeText={props.onChangeText}
-            theme={{ colors: {
-                primary: theme.colors.primary, 
-                text:theme.colors.black,
-            } }}
-            style={styles.input}
-            selectionColor={theme.colors.primary}
-            underlineColor="transparent"
-            mode={props.mode || 'outlined'}
-            keyboardType={props.isNumber ? 'phone-pad' : 'default'}
-            autoCapitalize={props.uppercase ? 'characters' : 'none'}
-            secureTextEntry={props.isPassword ? state.hide : false}
-        />
-        {props.isPassword && 
-          (<TouchableOpacity 
-              style={styles.rightIcon} 
-              onPress={():void => setState({hide: !state.hide})} >
-                <Icon 
-                  name={state.hide ? "eye-off" : "eye"} 
-                  size={24} color={theme.colors.grey} />
-          </TouchableOpacity>)}
+        <View style={styles.wrapInput}>
+          <Input
+              value={props.value}
+              error={!!props.errorText}
+              placeholder={props.placeholder}
+              autoFocus={props.autoFocus}
+              onChangeText={props.onChangeText}
+              theme={{ colors: {
+                  primary: theme.colors.primary, 
+                  text:theme.colors.black,
+              } }}
+              style={styles.input}
+              selectionColor={theme.colors.primary}
+              underlineColor="transparent"
+              mode={props.mode || 'outlined'}
+              keyboardType={props.isNumber ? 'phone-pad' : 'default'}
+              autoCapitalize={props.uppercase ? 'characters' : 'none'}
+              secureTextEntry={props.isPassword ? state.hide : false}
+          />
+          {props.isPassword && 
+            (<TouchableOpacity 
+                style={styles.rightIcon} 
+                onPress={():void => setState({hide: !state.hide})} >
+                  <Icon 
+                    name={state.hide ? "eye-off" : "eye"} 
+                    size={24} color={theme.colors.grey} />
+            </TouchableOpacity>)}
+        </View>
         {props.errorText ? <Text style={styles.error}>{props.errorText}</Text> : null}
     </View>
     )
@@ -64,9 +66,13 @@ const styles = StyleSheet.create({
     width: '100%',
     marginVertical: 12,
   },
+  wrapInput:{
+    flexDirection:"row"
+  },
   input: {
     backgroundColor: theme.colors.white,
-    height:50
+    height:50,
+    flex:1
   },
   error: {
     fontSize: 14,
@@ -80,7 +86,7 @@ const styles = StyleSheet.create({
   rightIcon:{
     position:"absolute",
     right:16,
-    top:38,
+    top:19,
   }
 });
 

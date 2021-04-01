@@ -12,6 +12,8 @@ import constants from '@constants';
 import PaperInput from 'components/PaperInput';
 import Logo from 'components/Logo';
 import PaperButton from 'components/PaperButton';
+import Button from 'components/Button';
+import TextInput from 'components/TextInput';
 
 
 function Login({navigation}: any) {
@@ -89,26 +91,8 @@ function Login({navigation}: any) {
           keyboardDidHideListener.remove();
           keyboardDidShowListener.remove();
         };
-      }, []);
+    }, []);
 
-    const SocialLogin = () => (
-        <>
-            <PaperButton 
-                mode="outlined"
-                onPress={onGoogleButtonPress}>
-                <Image 
-                    style={styles.iconButton}
-                    source={require("../../../assets/images/google.png")}  />
-                <Text color={"#5b5b5b"} type="thin">{"Masuk menggunakan Google"}</Text>
-            </PaperButton>
-            <View style={styles.wrapOR}>
-                <View style={styles.divider} />
-                <View style={styles.wrapTextOR}>
-                    <Text color="rgba(12, 12, 12, 0.5)">atau menggunakan email</Text>
-                </View>
-            </View>
-        </>
-    )
 
     return (
         <View style={styles.container}>
@@ -117,12 +101,29 @@ function Login({navigation}: any) {
                 <ScrollView
                     keyboardShouldPersistTaps="handled" 
                     showsVerticalScrollIndicator={false}>
-                   <Logo 
-                        style={{alignSelf:"center"}}
-                        source={require("../../../assets/images/arvis_logo_black.png")} 
-                    />
 
-                    {!isKeyboardVisible && (<SocialLogin />)}
+                   <Logo style={{alignSelf:"center"}} source={require("../../../assets/images/arvis_logo_black.png")} />
+
+                    {!isKeyboardVisible && (
+                        <>
+                            <PaperButton 
+                                mode="outlined"
+                                onPress={onGoogleButtonPress}>
+                                <View style={styles.rowButton}>
+                                    <Image 
+                                        style={styles.iconButton}
+                                        source={require("../../../assets/images/google.png")}  />
+                                    <Text color={"#5b5b5b"} type="thin">{"Masuk menggunakan Google"}</Text>
+                                </View>
+                            </PaperButton>
+                            <View style={styles.wrapOR}>
+                                <View style={styles.divider} />
+                                <View style={styles.wrapTextOR}>
+                                    <Text color="rgba(12, 12, 12, 0.5)">atau menggunakan email</Text>
+                                </View>
+                            </View>
+                        </>
+                    )}
 
                     <PaperInput
                         label="Email" 
@@ -202,14 +203,20 @@ const styles = StyleSheet.create({
         color: 'rgba(12, 12, 12, 0.5)',
     },
     link: {
-        // fontWeight: 'bold',
         color: 'rgb(43, 107, 160)',
     },
+    rowButton:{
+        justifyContent:"center",
+        flexDirection:"row",
+        alignItems:"center",
+        paddingTop:4,
+        flex:1,
+    },
     iconButton: {
+        resizeMode:"contain",
+        marginRight:6,
         width:16,
         height:16,
-        resizeMode:"contain", 
-        marginRight:10
     }
 });
 
