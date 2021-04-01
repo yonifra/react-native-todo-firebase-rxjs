@@ -24,6 +24,11 @@ const Button: React.FC<Props> = (props) => (
         },
         props.style,
     ]}
+    theme={{
+      colors:{
+        primary:theme.colors.primary
+      }
+    }}
     labelStyle={[styles.text, !props.loading && props.mode === 'outlined' && { color: "#ffd34d" }]}
     mode={props.mode}
     disabled={props.loading}

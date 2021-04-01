@@ -99,7 +99,7 @@ function Login({navigation}: any) {
                 <Image 
                     style={styles.iconButton}
                     source={require("../../../assets/images/google.png")}  />
-                <Text color={"#5b5b5b"} type="thin" size={7}>{"Masuk menggunakan Google"}</Text>
+                <Text color={"#5b5b5b"} type="thin">{"Masuk menggunakan Google"}</Text>
             </PaperButton>
             <View style={styles.wrapOR}>
                 <View style={styles.divider} />
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     wrapOR:{
         alignItems:"center", 
         height:40, 
-        marginTop:30,
+        marginTop:20,
         justifyContent:"space-between"
     },
     row: {

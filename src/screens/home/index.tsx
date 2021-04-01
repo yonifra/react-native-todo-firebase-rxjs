@@ -89,8 +89,8 @@ export default function Home({navigation}: any) {
                     onPress: async () => {
                         try {
                             await auth().signOut()
-                            await GoogleSignin.revokeAccess();
-                            await GoogleSignin.signOut();
+                            // await GoogleSignin.revokeAccess();
+                            // await GoogleSignin.signOut();
                         } catch {}
                         await persistor.purge()
                         await AsyncStorage.clear()
