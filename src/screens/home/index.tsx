@@ -87,13 +87,13 @@ export default function Home({navigation}: any) {
                 {
                     text:"Logout",
                     onPress: async () => {
+                        try {
+                            await auth().signOut()
+                            await GoogleSignin.revokeAccess();
+                            await GoogleSignin.signOut();
+                        } catch {}
                         await persistor.purge()
                         await AsyncStorage.clear()
-                        // try {
-                        //     await GoogleSignin.revokeAccess();
-                        //     await GoogleSignin.signOut();
-                        //     await auth().signOut()
-                        // } finally {}
                         RNRestart.Restart();
                     }
                 }

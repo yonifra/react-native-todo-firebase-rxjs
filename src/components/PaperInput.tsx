@@ -1,11 +1,12 @@
 import React, { memo } from 'react';
-import { View, StyleSheet, StyleProp, TextStyle } from 'react-native';
+import { View, StyleSheet, StyleProp, TextStyle, TouchableOpacity } from 'react-native';
 import { TextInput as Input } from 'react-native-paper';
 import { theme } from '@utils/theme';
 import Text from '@components/Text'
+import Icon from 'react-native-vector-icons/Ionicons';
 
 interface Props {
-    mode?:'outlined' | 'flat'
+    mode?: 'outlined' | 'flat'
     isPassword?: boolean;
     isNumber?:boolean;
     uppercase?:boolean;
@@ -45,6 +46,14 @@ const PaperInput: React.FC<Props> = (props) => {
             autoCapitalize={props.uppercase ? 'characters' : 'none'}
             secureTextEntry={props.isPassword ? state.hide : false}
         />
+        {props.isPassword && 
+          (<TouchableOpacity 
+              style={styles.rightIcon} 
+              onPress={():void => setState({hide: !state.hide})} >
+                <Icon 
+                  name={state.hide ? "eye-off" : "eye"} 
+                  size={24} color={theme.colors.grey} />
+          </TouchableOpacity>)}
         {props.errorText ? <Text style={styles.error}>{props.errorText}</Text> : null}
     </View>
     )
@@ -66,6 +75,11 @@ const styles = StyleSheet.create({
   },
   label:{
       color:'rgba(0, 0, 0, 0.54)'
+  },
+  rightIcon:{
+    position:"absolute",
+    right:16,
+    top:44,
   }
 });
 

@@ -13,3 +13,8 @@ export const passwordValidator = (password: string) => {
 
     return '';
 };
+export const nameValidator = (password: string) => {
+    if (!password || password.length <= 0) return 'Nama Lengkap tidak boleh kosong.';
+
+    return '';
+};

@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {Platform ,StyleSheet, KeyboardAvoidingView, View, Keyboard, TouchableOpacity, Image, Alert} from 'react-native'
+import {Platform ,StyleSheet, KeyboardAvoidingView, View, Keyboard, TouchableOpacity, Image, Alert, ScrollView} from 'react-native'
 import Text from '@components/Text'
 import { showErrorToast } from '@components/Toast';
 import { useDispatch } from 'react-redux';
@@ -60,6 +60,7 @@ function Login({navigation}: any) {
         auth()
         .signInWithEmailAndPassword(email.value, password.value)
         .then((response) => {
+            console.log(response);
             dispatch(setAuth(response))
         })
         .catch(error => {
@@ -103,14 +104,14 @@ function Login({navigation}: any) {
             <View style={styles.wrapOR}>
                 <View style={styles.divider} />
                 <View style={styles.wrapTextOR}>
-                    <Text color="rgba(12, 12, 12, 0.5)">atau masuk menggunakan email</Text>
+                    <Text color="rgba(12, 12, 12, 0.5)">atau menggunakan email</Text>
                 </View>
             </View>
         </>
     )
 
     return (
-        <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.container}>
 
             <Logo 
                 style={{alignSelf:"center"}}
@@ -158,7 +159,7 @@ function Login({navigation}: any) {
 
             </KeyboardAvoidingView>
             
-        </View>
+        </ScrollView>
     )
 }
 const styles = StyleSheet.create({

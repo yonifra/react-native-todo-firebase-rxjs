@@ -1,7 +1,7 @@
 import React,{ReactNode} from 'react';
 import {Text, Dimensions,StyleSheet,StyleProp, TextStyle} from 'react-native';
 import {RFValue as fs} from 'react-native-responsive-fontsize';
-const {width} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 interface Props {
   type?: 'default' | 'thin' | 'regular' | 'semibold' | 'bold';

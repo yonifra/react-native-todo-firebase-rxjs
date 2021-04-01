@@ -1,20 +1,22 @@
 import React,{useState,useEffect} from 'react';
-import {Platform ,StyleSheet, KeyboardAvoidingView, View, Keyboard, TouchableOpacity} from 'react-native'
+import {Platform ,StyleSheet, KeyboardAvoidingView, View, Keyboard, TouchableOpacity, Image, Alert, ScrollView} from 'react-native'
 import Text from '@components/Text'
-import Button from '@components/Button'
+import PaperButton from '@components/PaperButton'
+import Logo from '@components/Logo'
 import { showErrorToast } from '@components/Toast';
 import { useDispatch } from 'react-redux';
 import { theme } from '@utils/theme';
 import { setAuth } from '@store/actions/auth';
-import TextInput from '@components/TextInput';
+import PaperInput from '@components/PaperInput';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import AntDesign from "react-native-vector-icons/AntDesign"
 import constants from "@constants";
-import { emailValidator, passwordValidator } from '@utils/validators';
+import { emailValidator, passwordValidator, nameValidator } from '@utils/validators';
 
 function Register({navigation}: any) {
     const dispatch = useDispatch()
+    const [name, setName] = useState({value:'', error: ''});
     const [email, setEmail] = useState({value:'', error: ''});
     const [password, setPassword] = useState({value:'', error: ''});
     const [isLoading, setLoading] = useState(false);
@@ -44,9 +46,11 @@ function Register({navigation}: any) {
     }
 
     const createUserWithEmailAndPassword = (): void =>{
+        const nameError = nameValidator(name.value);
         const emailError = emailValidator(email.value);
         const passwordError = passwordValidator(password.value);
-        if (emailError || passwordError) {
+        if (nameError || emailError || passwordError) {
+            setName({ ...email, error: nameError });
             setEmail({ ...email, error: emailError });
             setPassword({ ...password, error: passwordError });
             return;
@@ -54,7 +58,8 @@ function Register({navigation}: any) {
         setLoading(true)
         auth()
         .createUserWithEmailAndPassword(email.value, password.value)
-        .then((response) => {
+        .then(async (response) => {
+            await auth()?.currentUser?.updateProfile({displayName: name.value})
             dispatch(setAuth(response))
         })
         .catch(error => {
@@ -85,57 +90,74 @@ function Register({navigation}: any) {
         };
       }, []);
 
+      const SocialLogin = () => (
+        <>
+            <PaperButton 
+                mode="outlined"
+                onPress={onGoogleButtonPress}>
+                <Image 
+                    style={styles.iconButton}
+                    source={require("../../../assets/images/google.png")}  />
+                <Text color={"#5b5b5b"} type="thin" size={7}>{"Buat akun menggunakan Google"}</Text>
+            </PaperButton>
+            <View style={styles.wrapOR}>
+                <View style={styles.divider} />
+                <View style={styles.wrapTextOR}>
+                    <Text color="rgba(12, 12, 12, 0.5)">atau menggunakan email</Text>
+                </View>
+            </View>
+        </>
+    )
+
     return (
-        <View style={styles.container}>
-            <KeyboardAvoidingView 
-                behavior={Platform.OS==="ios" ? "padding" : "height"}>
-                
-                <Text style={styles.title} type="bold" size={10}>Register</Text>
+        <ScrollView contentContainerStyle={styles.container}>
+           <Logo 
+                style={{alignSelf:"center"}}
+                source={require("../../../assets/images/arvis_logo_black.png")} 
+            />
 
-                <TextInput 
-                    value={email.value}
-                    errorText={email.error}
-                    placeholder="Type your email"
-                    onChangeText={(value) => setEmail({value, error: ''}) }
-                />
-                <TextInput 
-                    value={password.value}
-                    errorText={password.error}
-                    placeholder="Type your password"
-                    onChangeText={(value) => setPassword({value, error: ''}) }
-                    isPassword
-                />
+            {!isKeyboardVisible && (<SocialLogin />)}
 
-                <Button 
-                    loading={isLoading} 
-                    onPress={createUserWithEmailAndPassword}>
-                    <Text color="white" type="semibold">{isLoading?"Loading...":"Sign up"}</Text>
-                </Button>
+            <KeyboardAvoidingView
+               behavior={Platform.OS==="ios" ? "padding" : "height"}>
+                    <PaperInput
+                        label="Nama Lengkap"
+                        value={name.value}
+                        errorText={name.error}
+                        placeholder="contoh: Anton Budo Cahyadi"
+                        onChangeText={(value) => setEmail({value, error: ''}) }
+                    />
 
-                <View style={[styles.row, {alignSelf:"center"}]}>
-                    <Text style={styles.label}>Already have account? </Text>
-                    <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-                        <Text style={styles.link}>Sign in</Text>
-                    </TouchableOpacity>
-                </View>
-                
+                    <PaperInput
+                        label="Email" 
+                        value={email.value}
+                        errorText={email.error}
+                        placeholder="ex: myemail@anydomain.com"
+                        onChangeText={(value) => setEmail({value, error: ''}) }
+                    />
+                    <PaperInput
+                        label="Password" 
+                        value={password.value}
+                        errorText={password.error}
+                        placeholder="************"
+                        onChangeText={(value) => setPassword({value, error: ''}) }
+                        isPassword
+                    />
+
+                    <PaperButton 
+                        loading={isLoading} 
+                        onPress={createUserWithEmailAndPassword}>
+                        <Text type="thin" color="black">{isLoading ? "Loading..." : "Buat akun baru"}</Text>
+                    </PaperButton>
+
+                    <PaperButton 
+                        mode="text"
+                        loading={isLoading} 
+                        onPress={():void => navigation.navigate("Login")}>
+                        <Text style={styles.label}>Sudah memiliki akun? <Text style={styles.link}>Masuk</Text></Text>
+                    </PaperButton>
             </KeyboardAvoidingView>
-            {!isKeyboardVisible && (<View style={{marginTop:60}}>
-                <View style={styles.wrapOR}>
-                    <View style={styles.divider} />
-                    <View style={styles.wrapTextOR}>
-                        <Text>OR</Text>
-                    </View>
-                </View>
-                <Button 
-                    mode="outlined"
-                    style={{flexDirection:"row"}}
-                    onPress={onGoogleButtonPress}>
-                    <AntDesign name="google" color={theme.colors.primary} size={18} style={{marginRight:4}} />
-                    <Text color={theme.colors.primary} type="semibold">{"Sign up with google"}</Text>
-                </Button>
-            </View>)}
-        </View>
+        </ScrollView>
     )
 }
 const styles = StyleSheet.create({
@@ -146,12 +168,12 @@ const styles = StyleSheet.create({
         justifyContent:"center",
     },
     divider:{
-        borderBottomWidth: 2,
+        borderBottomWidth: 1,
         borderColor:theme.colors.defaultBorderColor,
         width:"100%",
         position:"absolute",
         zIndex:1, 
-        top:10
+        top:11
     },
     title:{
         alignSelf:"center",
@@ -165,20 +187,28 @@ const styles = StyleSheet.create({
     },
     wrapOR:{
         alignItems:"center", 
-        height:70, 
+        height:40, 
+        marginTop:30,
         justifyContent:"space-between"
     },
-      row: {
+    row: {
         flexDirection: 'row',
-        marginTop: 4,
-      },
-      label: {
-        color: theme.colors.grey,
-      },
-      link: {
-        fontWeight: 'bold',
-        color: theme.colors.primary,
-      },
+        marginVertical: 4,
+    },
+    label: {
+        color: 'rgba(12, 12, 12, 0.5)',
+    },
+    link: {
+        // fontWeight: 'bold',
+        color: 'rgb(43, 107, 160)',
+    },
+    iconButton: {
+        width:16,
+        height:16,
+        marginVertical:-1,
+        resizeMode:"contain", 
+        marginRight:10
+    }
 });
 
 export default (Register)
