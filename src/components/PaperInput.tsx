@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: theme.colors.white,
+    height:50
   },
   error: {
     fontSize: 14,
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
   rightIcon:{
     position:"absolute",
     right:16,
-    top:44,
+    top:38,
   }
 });
 
