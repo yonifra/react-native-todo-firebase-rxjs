@@ -110,16 +110,17 @@ function Register({navigation}: any) {
     )
 
     return (
-        <ScrollView contentContainerStyle={styles.container}>
-           <Logo 
-                style={{alignSelf:"center"}}
-                source={require("../../../assets/images/arvis_logo_black.png")} 
-            />
-
-            {!isKeyboardVisible && (<SocialLogin />)}
-
+        <View style={styles.container}>
             <KeyboardAvoidingView
                behavior={Platform.OS==="ios" ? "padding" : "height"}>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    <Logo 
+                        style={{alignSelf:"center"}}
+                        source={require("../../../assets/images/arvis_logo_black.png")} 
+                    />
+
+                    {!isKeyboardVisible && (<SocialLogin />)}
+
                     <PaperInput
                         label="Nama Lengkap"
                         value={name.value}
@@ -156,8 +157,9 @@ function Register({navigation}: any) {
                         onPress={():void => navigation.navigate("Login")}>
                         <Text style={styles.label}>Sudah memiliki akun? <Text style={styles.link}>Masuk</Text></Text>
                     </PaperButton>
+                </ScrollView>
             </KeyboardAvoidingView>
-        </ScrollView>
+        </View>
     )
 }
 const styles = StyleSheet.create({

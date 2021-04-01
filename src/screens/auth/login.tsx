@@ -111,55 +111,54 @@ function Login({navigation}: any) {
     )
 
     return (
-        <ScrollView contentContainerStyle={styles.container}>
-
-            <Logo 
-                style={{alignSelf:"center"}}
-                source={require("../../../assets/images/arvis_logo_black.png")} 
-            />
-
-            {!isKeyboardVisible && (<SocialLogin />)}
-
+        <View style={styles.container}>
             <KeyboardAvoidingView
                behavior={Platform.OS==="ios" ? "padding" : "height"}>
-                <PaperInput
-                    label="Email" 
-                    value={email.value}
-                    errorText={email.error}
-                    placeholder="ex: myemail@anydomain.com"
-                    onChangeText={(value) => setEmail({value, error: ''}) }
-                />
-                <PaperInput
-                    label="Password" 
-                    value={password.value}
-                    errorText={password.error}
-                    placeholder="************"
-                    onChangeText={(value) => setPassword({value, error: ''}) }
-                    isPassword
-                />
+                <ScrollView showsVerticalScrollIndicator={false}>
+                   <Logo 
+                        style={{alignSelf:"center"}}
+                        source={require("../../../assets/images/arvis_logo_black.png")} 
+                    />
 
-                <View style={[styles.row, {alignSelf:"flex-end", marginBottom:8}]}>
-                    <TouchableOpacity onPress={() => Alert.alert("ForgotPassword")}>
-                        <Text color="rgb(244, 67, 54)" >Lupa kata sandi</Text>
-                    </TouchableOpacity>
-                </View>
+                    {!isKeyboardVisible && (<SocialLogin />)}
 
-                <PaperButton 
-                    loading={isLoading} 
-                    onPress={signInWithEmailAndPassword}>
-                    <Text type="thin" color="black">{isLoading ? "Loading..." : "Log in"}</Text>
-                </PaperButton>
+                    <PaperInput
+                        label="Email" 
+                        value={email.value}
+                        errorText={email.error}
+                        placeholder="ex: myemail@anydomain.com"
+                        onChangeText={(value) => setEmail({value, error: ''}) }
+                    />
+                    <PaperInput
+                        label="Password" 
+                        value={password.value}
+                        errorText={password.error}
+                        placeholder="************"
+                        onChangeText={(value) => setPassword({value, error: ''}) }
+                        isPassword
+                    />
 
-                <PaperButton 
-                    mode="text"
-                    loading={isLoading} 
-                    onPress={():void => navigation.navigate("Register")}>
-                    <Text style={styles.label}>Belum memiliki akun? <Text style={styles.link}>Daftar</Text></Text>
-                </PaperButton>
+                    <View style={[styles.row, {alignSelf:"flex-end", marginBottom:8}]}>
+                        <TouchableOpacity onPress={() => Alert.alert("ForgotPassword")}>
+                            <Text color="rgb(244, 67, 54)" >Lupa kata sandi</Text>
+                        </TouchableOpacity>
+                    </View>
 
+                    <PaperButton 
+                        loading={isLoading} 
+                        onPress={signInWithEmailAndPassword}>
+                        <Text type="thin" color="black">{isLoading ? "Loading..." : "Log in"}</Text>
+                    </PaperButton>
+
+                    <PaperButton 
+                        mode="text"
+                        loading={isLoading} 
+                        onPress={():void => navigation.navigate("Register")}>
+                        <Text style={styles.label}>Belum memiliki akun? <Text style={styles.link}>Daftar</Text></Text>
+                    </PaperButton>
+                </ScrollView>
             </KeyboardAvoidingView>
-            
-        </ScrollView>
+        </View>
     )
 }
 const styles = StyleSheet.create({
