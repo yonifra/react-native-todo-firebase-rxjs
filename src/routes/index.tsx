@@ -50,18 +50,20 @@ function Routes() {
       <StackNav.Navigator
         screenOptions={TransitionPresets.SlideFromRightIOS}
         initialRouteName={HOME_SCREEN}>
-        <StackNav.Screen name={HOME_SCREEN} component={Home} 
+        <StackNav.Screen 
+          name={HOME_SCREEN} 
+          component={Home} 
           options={{ 
-            headerTitle: "All Tasks",
+            title: "All Tasks",
             headerStyle:{
               elevation: 0,
               shadowOpacity: 0,
             }
           }} />
-        <StackNav.Screen name={EDIT_TODO_SCREEN} component={EditTodo} 
-          options={{ 
-            headerTitle: "Edit Task"
-          }}
+        <StackNav.Screen 
+          name={EDIT_TODO_SCREEN} 
+          component={EditTodo} 
+          options={{title: "Edit Task" }}
         />
       </StackNav.Navigator>
     </NavigationContainer>
