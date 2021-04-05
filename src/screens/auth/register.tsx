@@ -11,8 +11,9 @@ import PaperInput from '@components/PaperInput';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import AntDesign from "react-native-vector-icons/AntDesign"
-import constants from "@constants";
+import constants from "@constants/index";
 import { emailValidator, passwordValidator, nameValidator } from '@utils/validators';
+import { LOGIN_SCREEN } from 'constants/routes';
 
 function Register({navigation}: any) {
     const dispatch = useDispatch()
@@ -105,13 +106,9 @@ function Register({navigation}: any) {
                         <>
                             <PaperButton 
                                 mode="outlined"
+                                icon={()=>(<Image  style={styles.iconButton} source={require("../../../assets/images/google.png")}  />)}
                                 onPress={onGoogleButtonPress}>
-                                <View style={styles.rowButton}>
-                                    <Image 
-                                        style={styles.iconButton}
-                                        source={require("../../../assets/images/google.png")}  />
-                                    <Text color={"#5b5b5b"} type="thin">{"Masuk menggunakan Google"}</Text>
-                                </View>
+                                    <Text color={"#5b5b5b"} type="thin">{"Buat menggunakan Google"}</Text>
                             </PaperButton>
                             <View style={styles.wrapOR}>
                                 <View style={styles.divider} />
@@ -155,7 +152,7 @@ function Register({navigation}: any) {
                     <PaperButton 
                         mode="text"
                         loading={isLoading} 
-                        onPress={():void => navigation.navigate("Login")}>
+                        onPress={():void => navigation.navigate(LOGIN_SCREEN)}>
                         <Text style={styles.label}>Sudah memiliki akun? <Text style={styles.link}>Masuk</Text></Text>
                     </PaperButton>
                 </ScrollView>
@@ -205,16 +202,8 @@ const styles = StyleSheet.create({
         // fontWeight: 'bold',
         color: 'rgb(43, 107, 160)',
     },
-    rowButton:{
-        justifyContent:"center",
-        flexDirection:"row",
-        alignItems:"center",
-        paddingTop:4,
-        flex:1,
-    },
     iconButton: {
         resizeMode:"contain",
-        marginRight:6,
         width:16,
         height:16,
     },

@@ -9,6 +9,7 @@ interface Props {
     children?: ReactNode | null | string;
     style?: StyleProp<ViewStyle>;
     loading?:boolean;
+    icon?:any;
 }
 
 const Button: React.FC<Props> = (props) => (
@@ -17,7 +18,7 @@ const Button: React.FC<Props> = (props) => (
       styles.button,
       { backgroundColor: props.loading ? "#F0F0F0" : "#ffd34d" },
         props.mode === 'outlined' && { 
-            backgroundColor: theme.colors.surface, 
+            backgroundColor: theme.colors.white, 
             borderColor: "rgba(0, 0, 0, 0.23)" },
         props.mode === 'text' && { 
             backgroundColor: 'transparent', 
@@ -27,10 +28,11 @@ const Button: React.FC<Props> = (props) => (
     theme={{
       colors:{
         primary:theme.colors.primary
-      }
+      },
     }}
     labelStyle={[styles.text, !props.loading && props.mode === 'outlined' && { color: "#ffd34d" }]}
     mode={props.mode}
+    icon={props.icon}
     disabled={props.loading}
     onPress={props.onPress}
     uppercase={false}>
@@ -42,11 +44,10 @@ const styles = StyleSheet.create({
   button: {
     width: '100%',
     marginVertical: 10,
-    height:44
+    height:44,
+    fontFamily: 'OpenSans-Regular',
   },
   text: {
-    // fontWeight: 'bold',
-    // fontSize: 15,
     lineHeight: 26,
   },
 });

@@ -38,6 +38,7 @@ import {
     getTodos,
     addTodo,
 } from '@store/actions/todos';
+import { EDIT_TODO_SCREEN } from "constants/routes";
 
 
 export default function Home({navigation}: any) {
@@ -124,8 +125,9 @@ export default function Home({navigation}: any) {
             key={item.id} 
             activeOpacity={.5}
             onLongPress={(): void =>{
-                setTodo(item)
-                inputRef?.current?.focus()
+                // setTodo(item)
+                // inputRef?.current?.focus()
+                navigation.navigate(EDIT_TODO_SCREEN, {item})
             }}
             onPress={() => {
                 dispatch(editTodo({...item, isDone: !item?.isDone}))

@@ -8,12 +8,13 @@ import { emailValidator, passwordValidator } from '@utils/validators';
 import { setAuth } from '@store/actions/auth';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import constants from '@constants';
+import constants from '@constants/index';
 import PaperInput from 'components/PaperInput';
 import Logo from 'components/Logo';
 import PaperButton from 'components/PaperButton';
 import Button from 'components/Button';
 import TextInput from 'components/TextInput';
+import { REGISTER_SCREEN } from 'constants/routes';
 
 
 function Login({navigation}: any) {
@@ -108,13 +109,9 @@ function Login({navigation}: any) {
                         <>
                             <PaperButton 
                                 mode="outlined"
+                                icon={()=>(<Image  style={styles.iconButton} source={require("../../../assets/images/google.png")}  />)}
                                 onPress={onGoogleButtonPress}>
-                                <View style={styles.rowButton}>
-                                    <Image 
-                                        style={styles.iconButton}
-                                        source={require("../../../assets/images/google.png")}  />
                                     <Text color={"#5b5b5b"} type="thin">{"Masuk menggunakan Google"}</Text>
-                                </View>
                             </PaperButton>
                             <View style={styles.wrapOR}>
                                 <View style={styles.divider} />
@@ -156,7 +153,7 @@ function Login({navigation}: any) {
                     <PaperButton 
                         mode="text"
                         loading={isLoading} 
-                        onPress={():void => navigation.navigate("Register")}>
+                        onPress={():void => navigation.navigate(REGISTER_SCREEN)}>
                         <Text style={styles.label}>Belum memiliki akun? <Text style={styles.link}>Daftar</Text></Text>
                     </PaperButton>
                 </ScrollView>
@@ -205,16 +202,8 @@ const styles = StyleSheet.create({
     link: {
         color: 'rgb(43, 107, 160)',
     },
-    rowButton:{
-        justifyContent:"center",
-        flexDirection:"row",
-        alignItems:"center",
-        paddingTop:4,
-        flex:1,
-    },
     iconButton: {
         resizeMode:"contain",
-        marginRight:6,
         width:16,
         height:16,
     }

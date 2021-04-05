@@ -8,6 +8,8 @@ import Home from '@screens/home'
 import {Splash, Login, Register} from '@screens/auth'
 
 import {useSelector} from 'react-redux';
+import EditTodo from 'screens/home/edit-todo';
+import {EDIT_TODO_SCREEN, HOME_SCREEN, LOGIN_SCREEN, REGISTER_SCREEN, SPLASH_SCREEN} from '@constants/routes'
 
 function Routes() {
   const StackNav = createStackNavigator();
@@ -21,9 +23,9 @@ function Routes() {
     return (
       <NavigationContainer>
         <SplashStack.Navigator
-          initialRouteName="Splash"
+          initialRouteName={SPLASH_SCREEN}
           headerMode="none">
-          <SplashStack.Screen name="Splash" component={Splash} />
+          <SplashStack.Screen name={SPLASH_SCREEN} component={Splash} />
         </SplashStack.Navigator>
       </NavigationContainer>
     );
@@ -35,9 +37,9 @@ function Routes() {
         <AuthStack.Navigator
           screenOptions={TransitionPresets.ScaleFromCenterAndroid}
           headerMode="none"
-          initialRouteName="Login">
-          <AuthStack.Screen name="Login" component={Login} />
-          <AuthStack.Screen name="Register" component={Register} />
+          initialRouteName={LOGIN_SCREEN}>
+          <AuthStack.Screen name={LOGIN_SCREEN} component={Login} />
+          <AuthStack.Screen name={REGISTER_SCREEN} component={Register} />
         </AuthStack.Navigator>
       </NavigationContainer>
     );
@@ -47,8 +49,8 @@ function Routes() {
     <NavigationContainer>
       <StackNav.Navigator
         screenOptions={TransitionPresets.SlideFromRightIOS}
-        initialRouteName="Home">
-        <StackNav.Screen name="Home" component={Home} 
+        initialRouteName={HOME_SCREEN}>
+        <StackNav.Screen name={HOME_SCREEN} component={Home} 
           options={{ 
             headerTitle: "All Tasks",
             headerStyle:{
@@ -56,6 +58,11 @@ function Routes() {
               shadowOpacity: 0,
             }
           }} />
+        <StackNav.Screen name={EDIT_TODO_SCREEN} component={EditTodo} 
+          options={{ 
+            headerTitle: "Edit Task"
+          }}
+        />
       </StackNav.Navigator>
     </NavigationContainer>
   );
