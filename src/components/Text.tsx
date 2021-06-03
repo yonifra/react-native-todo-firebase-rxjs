@@ -1,5 +1,5 @@
-import React,{ReactNode} from 'react';
-import {Text, Dimensions,StyleSheet,StyleProp, TextStyle} from 'react-native';
+import React, {ReactNode} from 'react';
+import {Text, Dimensions, StyleSheet, StyleProp, TextStyle} from 'react-native';
 import {RFValue as fs} from 'react-native-responsive-fontsize';
 const {width} = Dimensions.get('window');
 
@@ -8,8 +8,8 @@ interface Props {
   color?: string;
   size?: number;
   children: string | ReactNode | null;
-  style?:StyleProp<TextStyle>;
-  maxLines?:number;
+  style?: StyleProp<TextStyle>;
+  maxLines?: number;
 }
 
 const Typography: React.FC<Props> = props => {
@@ -24,8 +24,7 @@ const Typography: React.FC<Props> = props => {
   return (
     <Text
       numberOfLines={props.maxLines}
-      style={[TextStyles, colors, sizeText, props.style]}
-      >
+      style={[TextStyles, colors, sizeText, props.style]}>
       {props.children}
     </Text>
   );
@@ -53,6 +52,5 @@ const styles = StyleSheet.create({
     fontFamily: 'OpenSans-Bold',
   },
 });
-
 
 export default Typography;

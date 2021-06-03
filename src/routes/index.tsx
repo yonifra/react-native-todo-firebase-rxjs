@@ -4,8 +4,8 @@ import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 
-import Home from '@screens/home'
-import {Splash, Login, Register} from '@screens/auth'
+import Home from '@screens/home';
+import {Splash, Login, Register} from '@screens/auth';
 
 import {useSelector} from 'react-redux';
 
@@ -20,9 +20,7 @@ function Routes() {
   if (isSplashing) {
     return (
       <NavigationContainer>
-        <SplashStack.Navigator
-          initialRouteName="Splash"
-          headerMode="none">
+        <SplashStack.Navigator initialRouteName="Splash" headerMode="none">
           <SplashStack.Screen name="Splash" component={Splash} />
         </SplashStack.Navigator>
       </NavigationContainer>
@@ -48,14 +46,17 @@ function Routes() {
       <StackNav.Navigator
         screenOptions={TransitionPresets.SlideFromRightIOS}
         initialRouteName="Home">
-        <StackNav.Screen name="Home" component={Home} 
-          options={{ 
-            headerTitle: "All Tasks",
-            headerStyle:{
+        <StackNav.Screen
+          name="Home"
+          component={Home}
+          options={{
+            headerTitle: 'All Tasks',
+            headerStyle: {
               elevation: 0,
               shadowOpacity: 0,
-            }
-          }} />
+            },
+          }}
+        />
       </StackNav.Navigator>
     </NavigationContainer>
   );
