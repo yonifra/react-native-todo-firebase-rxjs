@@ -6,12 +6,12 @@ stages:
 default:
   interruptible: true
   before_script:
-    - yarn install --frozen-lockfile
+    - npm install --frozen-lockfile
 
 cache:
   key:
     files:
-      - yarn.lock
+      - package-lock.json
   paths:
     - node_modules
 
