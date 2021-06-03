@@ -1,12 +1,12 @@
-import { combineEpics } from 'redux-observable';
+import {combineEpics} from 'redux-observable';
 
-import {getTodosEpic, addTodoEpic, editTodoEpic, deleteTodoEpic} from './todos'
+import {getTodosEpic, addTodoEpic, editTodoEpic, deleteTodoEpic} from './todos';
 
 export const rootEpic = combineEpics(
-    getTodosEpic,
-    addTodoEpic,
-    editTodoEpic,
-    deleteTodoEpic
+  getTodosEpic,
+  addTodoEpic,
+  editTodoEpic,
+  deleteTodoEpic,
 );
 
 export default rootEpic;

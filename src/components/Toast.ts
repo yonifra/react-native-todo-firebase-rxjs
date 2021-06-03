@@ -1,4 +1,4 @@
-import { showMessage, hideMessage } from "react-native-flash-message";
+import {showMessage, hideMessage} from 'react-native-flash-message';
 import {StatusBar} from 'react-native';
 
 export default function showToast(
@@ -6,17 +6,17 @@ export default function showToast(
   type: 'info' | 'success' | 'danger',
 ) {
   showMessage({
-    message: "Attention!",
+    message: 'Attention!',
     description: message,
-    icon:type,
+    icon: type,
     type,
-    hideStatusBar:true,
-    statusBarHeight: StatusBar.currentHeight
+    hideStatusBar: true,
+    statusBarHeight: StatusBar.currentHeight,
   });
 }
 
 export function hideToast() {
-  hideMessage()
+  hideMessage();
 }
 
 export function showErrorToast(message: string) {

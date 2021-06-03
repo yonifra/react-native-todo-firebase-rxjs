@@ -1,1 +1,1 @@
-export const setSplash= ()=> ({type:"SET_DONE_SPLASH"});
+export const setSplash = () => ({type: 'SET_DONE_SPLASH'});
