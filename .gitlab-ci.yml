@@ -18,7 +18,7 @@ cache:
 build-android:
   stage: build-android
   script:
-    - cd android && ./gradlew bundleRelease assembleRelease
+    - cd android && ./gradlew assembleRelease
   artifacts:
     paths:
       - ./android/app/build/outputs/
