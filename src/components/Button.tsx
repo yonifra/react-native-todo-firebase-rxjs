@@ -1,11 +1,11 @@
 import React,{ReactNode} from "react";
 import { widthPercentageToDP as wp} from 'react-native-responsive-screen';
-import { TouchableOpacity, StyleSheet, StyleProp, ViewStyle } from "react-native";
+import { TouchableOpacity, StyleSheet, StyleProp, ViewStyle, GestureResponderEvent } from "react-native";
 import { theme } from '@utils/theme';
 
 interface Props {
     mode?: 'outlined' | 'default' | 'link';
-    onPress?: ((event: any) => void) | undefined;
+    onPress?: ((event: GestureResponderEvent) => void) | undefined;
     children?: ReactNode | null;
     style?: StyleProp<ViewStyle>;
     loading?:boolean;

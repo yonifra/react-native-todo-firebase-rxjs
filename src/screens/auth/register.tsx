@@ -14,8 +14,10 @@ import AntDesign from "react-native-vector-icons/AntDesign"
 import constants from "@constants/index";
 import { emailValidator, passwordValidator, nameValidator } from '@utils/validators';
 import { LOGIN_SCREEN } from 'constants/routes';
+import { useNavigation } from '@react-navigation/native';
 
-function Register({navigation}: any) {
+function Register() {
+    const navigation = useNavigation()
     const dispatch = useDispatch()
     const [name, setName] = useState({value:'', error: ''});
     const [email, setEmail] = useState({value:'', error: ''});

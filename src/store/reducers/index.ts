@@ -1,8 +1,14 @@
 import { combineReducers } from 'redux';
 // Imports: Reducers
-import apps from './apps'
-import todos from './todos'
-import auth from './auth'
+import apps, {IRSapps} from './apps'
+import todos, {IRStodos} from './todos'
+import auth, {IRSauth} from './auth'
+
+export interface IRState {
+    apps: IRSapps,
+    auth: IRSauth,
+    todos: IRStodos,
+}
 
 // Redux: Root Reducer
 const rootReducer = combineReducers({

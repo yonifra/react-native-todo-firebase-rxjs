@@ -1,4 +1,16 @@
-const initialState = {
+export interface IRStodo {
+  id:string;
+  fireId?:string;
+  title:string;
+  isDone?:boolean;
+  createAt?:Date;
+  createBy?:string 
+}
+export interface IRStodos {
+  data: IRStodo[];
+} 
+
+const initialState: IRStodos = {
   data:[]
 }
 
@@ -17,12 +29,12 @@ const todos = (state= initialState, {type, payload}: any) => {
       case 'UPDATE_TODO':
           return {
             ...state,
-            data: state.data.map((e: any) => e.id===payload?.id ? {...e, ...payload} : e)
+            data: state.data.map((e: IRStodo) => e.id===payload?.id ? {...e, ...payload} : e)
           }
       case 'DELETE_TODO':
         return {
           ...state,
-          data: state.data.filter((e: any) => e.id!==payload?.id),
+          data: state.data.filter((e: IRStodo) => e.id!==payload?.id),
         };  
       default:
         return state;

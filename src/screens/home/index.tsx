@@ -39,26 +39,25 @@ import {
     addTodo,
 } from '@store/actions/todos';
 import { EDIT_TODO_SCREEN } from "constants/routes";
+import { IRState } from "store/reducers";
+import { IRStodo } from "store/reducers/todos";
+import { useNavigation } from "@react-navigation/native";
 
 
-export default function Home({navigation}: any) {
+export default function Home() {
+    const navigation = useNavigation()
     const insets = useSafeAreaInsets()
     const dispatch = useDispatch()
-    const todos = useSelector((state: any) => state.todos)
+    const todos = useSelector((state: IRState) => state.todos)
 
     const inputRef = React.useRef<ReactTextInput>(null)
 
-    const [todo, setTodo] = React.useState<{ 
-        id?:string;
-        title:string;
-        isDone?:boolean;
-        createAt?:Date;
-        createBy?:string }>({title:""});
+    const [todo, setTodo] = React.useState<IRStodo>({id:"", title:""});
     
     const onAddOrUpdateTodo = (): void => {
         const title = todo.title.trim()
         if(title=="")return;
-        if(todo.id==null){
+        if(todo.id==""){
             Object.assign(todo,{
                 title,
                 id: uuidv4(),
@@ -74,7 +73,7 @@ export default function Home({navigation}: any) {
             dispatch(editTodo(todo))
             inputRef?.current?.blur()
         }   
-        setTodo({title:""})
+        setTodo({id:"", title:""})
     }
 
     const logout = () => {
@@ -120,7 +119,7 @@ export default function Home({navigation}: any) {
     },[navigation])
 
 
-    const renderItem = ({item}: any) => (
+    const renderItem = ({item}: {item: IRStodo}) => (
         <TouchableOpacity 
             key={item.id} 
             activeOpacity={.5}

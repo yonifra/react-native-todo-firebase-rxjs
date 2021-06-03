@@ -1,7 +1,12 @@
-const initialState = {
-    user:null,
-    token:null
-  }
+export interface IRSauth {
+  user:object | undefined;
+  token:string | undefined;
+}
+
+const initialState: IRSauth = {
+    user:undefined,
+    token:undefined
+}
   
 const auth = (state= initialState, {type, payload}: any) => {
     switch (type) {

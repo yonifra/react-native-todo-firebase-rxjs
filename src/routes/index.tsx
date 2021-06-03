@@ -10,14 +10,15 @@ import {Splash, Login, Register} from '@screens/auth'
 import {useSelector} from 'react-redux';
 import EditTodo from 'screens/home/edit-todo';
 import {EDIT_TODO_SCREEN, HOME_SCREEN, LOGIN_SCREEN, REGISTER_SCREEN, SPLASH_SCREEN} from '@constants/routes'
+import {IRState} from '@store/reducers'
 
 function Routes() {
   const StackNav = createStackNavigator();
   const SplashStack = createStackNavigator();
   const AuthStack = createStackNavigator();
 
-  const {user} = useSelector((state: any) => state.auth);
-  const {isSplashing} = useSelector((state: any) => state.apps);
+  const {user} = useSelector((state: IRState) => state.auth);
+  const {isSplashing} = useSelector((state: IRState) => state.apps);
 
   if (isSplashing) {
     return (

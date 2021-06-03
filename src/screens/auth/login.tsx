@@ -15,9 +15,12 @@ import PaperButton from 'components/PaperButton';
 import Button from 'components/Button';
 import TextInput from 'components/TextInput';
 import { REGISTER_SCREEN } from 'constants/routes';
+import Axios from 'utils/Axios';
+import { useNavigation } from '@react-navigation/native';
 
 
-function Login({navigation}: any) {
+function Login() {
+    const navigation = useNavigation()
     const dispatch = useDispatch()
     const [email, setEmail] = useState({value:'', error: ''});
     const [password, setPassword] = useState({value:'', error: ''});
@@ -50,6 +53,22 @@ function Login({navigation}: any) {
         }
         
     }
+
+    const getCurrentUser = async () => {
+        console.log("FETCHING");
+        try {
+            const user = await Axios.get(`api/web/v0/user/getCurrentUser`);
+            console.log(user);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            console.log("FETCHING DONE");
+        }
+    }
+
+    useEffect(() => {
+        getCurrentUser()
+    }, []);
 
     const signInWithEmailAndPassword = (): void =>{
         const emailError = emailValidator(email.value);

@@ -5,12 +5,15 @@ import TextInput from "@components/TextInput"
 import {useDispatch} from "react-redux"
 import { theme } from "@utils/theme";
 import Text from "@components/Text"
+import { useNavigation, useRoute } from "@react-navigation/native";
 
-function EditTodo({navigation, route}: any) {
+function EditTodo() {
+    const route = useRoute()
+    const navigation = useNavigation()
     const dispatch = useDispatch()
-    const {item} = route.params
+    const {item}: any = route.params
 
-    const [title, setTitle] = React.useState<string>(item.title);
+    const [title, setTitle] = React.useState<string>(item?.title);
 
     const updateTodo = (): void => {
         Object.assign(item, {title})

@@ -1,6 +1,10 @@
-const initialState = {
+export interface IRSapps {
+  isSplashing?: boolean;
+}
+
+const initialState: IRSapps = {
     isSplashing: true,
-  }
+}
   
 const apps = (state= initialState, {type}: any) => {
     switch (type) {

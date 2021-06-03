@@ -8,7 +8,7 @@ interface Props {
     isNumber?:boolean;
     uppercase?:boolean;
     errorText?:string;
-    icon?: any;
+    icon?: ImageSourcePropType;
     iconStyle?:StyleProp<ImageStyle>;
     style?:StyleProp<TextStyle>;
     value:string;
