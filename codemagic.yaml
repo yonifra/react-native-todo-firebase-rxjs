@@ -11,7 +11,7 @@ workflows:
       cocoapods: default
     scripts:
       - name: Install npm dependencies
-        script: yarn install --frozen-lockfile
+        script: npm install --frozen-lockfile
       - name: Install CocoaPods dependencies
         script: |
           cd ios
@@ -33,10 +33,10 @@ workflows:
     cache:
       cache_paths:
         - ~/.gradle/caches
-        - ~/.cache/yarn/v6
+        - ~/.cache/npm/v6
 
     scripts:
-      - yarn install --frozen-lockfile
+      - npm install --frozen-lockfile
       - echo "sdk.dir=$HOME/programs/android-sdk-macosx" > "$FCI_BUILD_DIR/android/local.properties"
       - cd android && ./gradlew bundleRelease assembleRelease
     artifacts:
